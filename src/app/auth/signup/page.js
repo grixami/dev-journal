@@ -1,11 +1,43 @@
 "use client";
 import Head from "next/head";
 import NotLoginNav from "../../../components/NotLoginNav";
+import { useState } from "react";
 
 export default function Signup() {
-    const handleSubmit = (e) => {
+    const [isRegistered, setIsRegistered] = useState(false);
+    const [isRegistrationFailed, setIsRegistrationFailed] = useState(false);
+    const [failMessage, setFailMessage] = useState(""); // starts as empty string
+
+    const handleSubmit = async (e) => {
         e.preventDefault(); // Prevents form from submitting
-        alert("TODO");
+        setIsRegistered(false)
+        setIsRegistrationFailed(false)
+        const username = e.target.username.value;
+        const password = e.target.password.value
+        //console.log(username)
+
+        try {
+          const resp = await fetch("/api/auth/signup", {
+            method: "POST",
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              username,
+              password
+            }),
+          })
+          if(resp.status == 200) {
+            setIsRegistered(true)
+          } else {
+            const data = await resp.json()
+            setIsRegistrationFailed(true)
+            setFailMessage(data.message)
+          }
+        } catch(error) {
+          console.error('Error during signup:', error);
+        }
+
   };
   return (
     <>
@@ -36,6 +68,16 @@ export default function Signup() {
                     <button type="submit"className="mx-auto block border border-[#f0f6fc] px-4 py-2 rounded-lg hover:bg-[#35383d]">Sign Up</button>
                 </form>
             </div>
+          {isRegistered && (
+            <div className="bg-lime-600 rounded-xl px-3 py-3 border">
+              <p>Registration Completed, please go to <a href="/auth/login" className="text-blue-400">Login</a></p>
+            </div>
+          )}
+          {isRegistrationFailed && (
+            <div className="bg-red-600 rounded-xl px-3 py-3 border">
+              <p>Registration Failed, {failMessage}, please try again</p>
+            </div>
+          )}
         </div>
       </div>
       </div>
