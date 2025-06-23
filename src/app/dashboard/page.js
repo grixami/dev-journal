@@ -50,9 +50,9 @@ return (
             <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
         <div>
-            <LoginNav userData={userData}/> {/* Shows pfp, username, bio and joinDate */}
+            <LoginNav/>
             <div className="flex mt-10">
-                <ProfileCard userData={userData} editProfile={true} />
+                <ProfileCard userData={userData} editProfile={true} />  {/* Shows pfp, username, bio and joinDate */}
                 <div className="flex-grow"></div>
                 <div className="w-1/2 mr-10">
                     <div className="border-2 border-white rounded-xl px-5 py-5">
