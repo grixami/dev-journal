@@ -107,7 +107,7 @@ export async function updateUserProfile(id, username, bio, pfp) {
 }
 
 export async function updateUserPassword(id, password) {
-    const user = prisma.user.findFirst({
+    const user = await prisma.user.findFirst({
         where: { id: id }
     })
 
@@ -123,4 +123,20 @@ export async function updateUserPassword(id, password) {
     })
 
     return newUser
+}
+
+export async function getUsersStartsWith(usernameStart) { // for searching
+    const users = await prisma.user.findMany({
+        where: {
+            username: {
+                startsWith: usernameStart
+            }
+        }
+    })  
+
+    if(users.length == 0) {
+        return null
+    }
+
+    return users;
 }

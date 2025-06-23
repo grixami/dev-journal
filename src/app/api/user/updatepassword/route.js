@@ -10,7 +10,7 @@ export async function POST(request) {
     let {password, token} = await request.json();
     
     if(password.length < 8) {
-        return new Response(JSON.stringify({message: "Password must be longer than 8 letters"}), {
+        return new Response(JSON.stringify({message: "Password must be longer than 8 characters"}), {
             status: 500
         });
     }

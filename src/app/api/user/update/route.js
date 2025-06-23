@@ -23,6 +23,15 @@ export async function POST(request) {
         });
     }
 
+    if(bio) {
+        if(bio.length > 256) {
+            return new Response(JSON.stringify({ message: "Bio length must contain fewer than 256 characters"}), {
+                status: 500,
+                headers: { "Content-Type": "application/json" },
+            });
+        }
+    }
+
     if (pfp) {
         const base64String = pfp.includes(",") ? pfp.split(",")[1] : pfp;
 

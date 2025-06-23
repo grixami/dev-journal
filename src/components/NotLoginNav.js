@@ -21,8 +21,8 @@ export default function NotLoginNav({}) {
           </Link>
           <nav>
             <ul className="text-black flex justify-end px-4">
-              <li className="mx-2"><UrlButton buttonText="Login" link="/auth/login"/></li>
-              <li className="mx-2"><UrlButton buttonText="Sign Up" link="/auth/signup"/></li>
+              <li className="mx-2 transition-transform duration-300 ease-in-out hover:scale-105"><UrlButton buttonText="Login" link="/auth/login"/></li>
+              <li className="mx-2 transition-transform duration-300 ease-in-out hover:scale-105"><UrlButton buttonText="Sign Up" link="/auth/signup"/></li>
             </ul>
           </nav>
         </div>

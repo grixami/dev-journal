@@ -31,10 +31,10 @@ export default function LoginNav({}) {
           </div>
           <nav>
             <ul className="flex justify-end px-4">
-              <li className="mx-2"><UrlButton buttonText="Settings" link="/dashboard/settings"/></li>
-              <li className="mx-2"><UrlButton buttonText="Create Post" link="/dashboard/createpost"/></li>
-              <li className="mx-2"><UrlButton buttonText="Dashboard" link="/dashboard"/></li>
-              <li className="mx-2"><UrlButton buttonText="Logout" link="/auth/logout"/></li>
+              <li className="mx-2 transition-transform duration-300 ease-in-out hover:scale-105"><UrlButton buttonText="Settings" link="/dashboard/settings"/></li>
+              <li className="mx-2 transition-transform duration-300 ease-in-out hover:scale-105"><UrlButton buttonText="Create Post" link="/dashboard/createpost"/></li>
+              <li className="mx-2 transition-transform duration-300 ease-in-out hover:scale-105"><UrlButton buttonText="Dashboard" link="/dashboard"/></li>
+              <li className="mx-2 transition-transform duration-300 ease-in-out hover:scale-105"><UrlButton buttonText="Logout" link="/auth/logout"/></li>
             </ul>
           </nav>
         </div>
