@@ -1,12 +1,24 @@
 "use client";
 import Head from "next/head";
 import NotLoginNav from "../../../components/NotLoginNav";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { cookieExists } from "@/utils/cookies";
 
 export default function Signup() {
+    const router = useRouter();
+
     const [isRegistered, setIsRegistered] = useState(false);
     const [isRegistrationFailed, setIsRegistrationFailed] = useState(false);
     const [failMessage, setFailMessage] = useState(""); // starts as empty string
+
+      useEffect(() => {
+        if(cookieExists("auth_token")) {
+            router.replace("/");
+        }
+
+      }, [router]);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevents form from submitting

@@ -2,15 +2,15 @@
 
 // TODO, rate limiting
 
-import { CreateUser } from "@/utils/PrismaUtils";
-import { encrypt  } from "@/utils/api/stringencryption";
+import { createUser } from "@/utils/prismautils";
+import { encrypt } from "@/utils/api/stringencryption";
 
 export async function POST(request) {
   try {
     
     let { username, password } = await request.json();
 
-    password = await encrypt(password)
+    password = encrypt(password)
 
     if(!username || !password) {
       return new Response(JSON.stringify({ message: "Username Or Password not in form" }), {
@@ -19,7 +19,7 @@ export async function POST(request) {
       });
     }
 
-    await CreateUser(username, password);
+    await createUser(username, password);
 
     return new Response(JSON.stringify({ message: "OK" }), {
       status: 200,

@@ -3,9 +3,28 @@ import Head from "next/head";
 import NotLoginNav from "../../../components/NotLoginNav";
 
 export default function Login() {
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault(); // Prevents form from submitting
-        alert("TODO");
+        const username = e.target.username.value;
+        const password = e.target.password.value
+
+        const resp = await fetch("/api/auth/login", {
+            method: "POST",
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              username,
+              password
+            }),
+        });
+
+        if(resp.status != 200) {
+          return
+        }
+        
+        const data = await resp.json()
+        document.cookie = `auth_token=${data.token}; path=/;`
   };
   return (
     <>
