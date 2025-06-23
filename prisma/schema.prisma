@@ -12,11 +12,12 @@ model User {
   id        Int      @id @default(autoincrement())
   username  String   @unique
   password  String
-  bio       String?
+  bio       String?         @db.LongText
   profilepic       String?   @db.LongText // will always be 128x128 b64 encoded
   createdAt DateTime @default(now())
 
   posts     Post[]   @relation("UserPosts")
+  comments  Comment[]   @relation("UserComments")
 }
 
 model Post {
@@ -27,6 +28,14 @@ model Post {
   updatedAt DateTime @updatedAt
 
   author    User     @relation("UserPosts", fields: [authorId], references: [id])
+  authorId  Int
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String   @db.LongText 
+
+  author    User     @relation("UserComments", fields: [authorId], references: [id])
   authorId  Int
 }
 

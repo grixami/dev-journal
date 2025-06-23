@@ -5,11 +5,13 @@
 import { createUser } from "@/utils/prismautils";
 import { encrypt } from "@/utils/api/stringencryption";
 
+const re = new RegExp("^[a-zA-Z0-9]+$"); // Ensures that the user will not be created, if they change the html to bypass the pattern
+
 export async function POST(request) {
   try {
     
     let { username, password } = await request.json();
-
+    let preHashPass = password
     password = encrypt(password)
 
     if(!username || !password) {
@@ -19,6 +21,19 @@ export async function POST(request) {
       });
     }
 
+    if(!re.test(username)) {
+      return new Response(JSON.stringify({ message: "Invalid Username, please only use a-z and 0-9" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+    });
+    }
+
+    if(preHashPass.length < 8) {
+      return new Response(JSON.stringify({ message: "Please make your password at least 8 characters long" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
     await createUser(username, password);
 
     return new Response(JSON.stringify({ message: "OK" }), {

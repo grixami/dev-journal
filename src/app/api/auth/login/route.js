@@ -1,6 +1,6 @@
 "use server";
 
-import { getUserPassword } from "@/utils/prismautils";
+import { getUserPassword, usernameToUserID } from "@/utils/prismautils";
 import { compare } from "@/utils/api/stringencryption"
 
 const jwt = require("jsonwebtoken")
@@ -11,14 +11,17 @@ export async function POST(request) {
     let { username, password } = await request.json();
     let userPassword = await getUserPassword(username);
 
-    if(!compare(password, userPassword)) {
+    const passwordMatch = compare(password, userPassword);
+
+    if(!passwordMatch) {
       return new Response(JSON.stringify({ message: "Incorrect Password" }), {
           status: 401,
           headers: { "Content-Type": "application/json" },
       });
     }
 
-    const token = jwt.sign({userId: 2}, jwtSecret)
+    const userId = await usernameToUserID(username);
+    const token = jwt.sign({userId: userId}, jwtSecret);
 
     return new Response(JSON.stringify({ message: "sucess", token: token }), {
       status: 200,
@@ -27,7 +30,7 @@ export async function POST(request) {
 
 
   } catch (error) {
-    return new Response(JSON.stringify({ message: "placeholder" }), {
+    return new Response(JSON.stringify({ message: "Incorrect Password or user does not exist" }), {
       status: 500,
       headers: { "Content-Type": "application/json" },
     });

@@ -1,30 +1,52 @@
 "use client";
 import Head from "next/head";
-import NotLoginNav from "../../../components/NotLoginNav";
+import NotLoginNav from "@/components/notloginnav";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { cookieExists } from "@/utils/cookies";
 
 export default function Login() {
+    const [isError, setIsError] = useState(false)
+    const [errorMessage, setErrorMessage] = useState(null)
+    const router = useRouter();
+
+    useEffect(() => {
+      if(cookieExists("auth_token")) {
+          router.replace("/");
+      }
+
+    }, [router]);
+
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevents form from submitting
         const username = e.target.username.value;
         const password = e.target.password.value
+        try {
+          const resp = await fetch("/api/auth/login", {
+              method: "POST",
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                username,
+                password
+              }),
+          });
 
-        const resp = await fetch("/api/auth/login", {
-            method: "POST",
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              username,
-              password
-            }),
-        });
+          const data = await resp.json();
 
-        if(resp.status != 200) {
-          return
-        }
+          if(resp.status != 200) {
+            setIsError(true);
+            setErrorMessage(data.message);
+            return;
+          }
         
-        const data = await resp.json()
-        document.cookie = `auth_token=${data.token}; path=/;`
+          document.cookie = `auth_token=${data.token}; path=/;`;
+          router.replace("/dashboard");
+        } catch(error) {
+          console.log("Error duting login", error);
+        }
+
   };
   return (
     <>
@@ -55,6 +77,11 @@ export default function Login() {
                     <button type="submit"className="mx-auto block border border-[#f0f6fc] px-4 py-2 rounded-lg hover:bg-[#35383d]">Login</button>
                 </form>
             </div>
+            {isError && (
+            <div className="bg-red-600 rounded-xl px-3 py-3 border">
+              <p>Login Failed, {errorMessage}, please try again</p>
+            </div>
+          )}
         </div>
       </div>
       </div>

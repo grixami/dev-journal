@@ -1,6 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
-import UrlButton from "./UrlButton"
+import UrlButton from "./urlbutton"
 
 export default function NotLoginNav({}) {
 

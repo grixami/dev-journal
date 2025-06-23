@@ -8,7 +8,7 @@ export async function createUser(username, password) {
     });
 
     if(existingUser) {
-        throw new Error("Username exists already")
+        throw new Error("Username exists already");
     }
 
     const newUser = await prisma.user.create({
@@ -28,9 +28,9 @@ export async function getUserPassword(username) {
     });
     
     if(!user) {
-        throw new Error("User does not exist")
+        throw new Error("User does not exist");
     }
-    return user.password
+    return user.password;
 }
 
 export async function usernameToId(username) {
@@ -38,7 +38,7 @@ export async function usernameToId(username) {
         where: { username: username }
     });
     if(!user) {
-        throw new Error("User does not exist")
+        throw new Error("User does not exist");
     }
     return user.id
 }
@@ -54,6 +54,22 @@ export async function getUserNoPass(id) {
             profilepic: true,
             createdAt: true
         }
-    })
-    return user
+    });
+
+    if(!user) {
+        throw new Error("User does not exist");
+    }
+    return user;
+}
+
+export async function usernameToUserID(username) {
+    const user = await prisma.user.findFirst({
+        where: {username: username}
+    });
+
+    if(!user) {
+        throw new Error("User does not exist");
+    }
+
+    return user.id;
 }

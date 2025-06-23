@@ -1,6 +1,6 @@
 "use client";
 import Head from "next/head";
-import NotLoginNav from "../../../components/NotLoginNav";
+import NotLoginNav from "@/components/notloginnav";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { cookieExists } from "@/utils/cookies";
@@ -11,7 +11,7 @@ export default function Signup() {
     const [isRegistered, setIsRegistered] = useState(false);
     const [isRegistrationFailed, setIsRegistrationFailed] = useState(false);
     const [failMessage, setFailMessage] = useState(""); // starts as empty string
-
+    
       useEffect(() => {
         if(cookieExists("auth_token")) {
             router.replace("/");
@@ -70,6 +70,7 @@ export default function Signup() {
                     <label className="block mb-2" htmlFor="username">Username</label>
                     <input type="text" id="username" name="username" placeholder="Enter your username" required
                         className="w-full mb-4 rounded-md p-2 bg-[#1a1f21] border border-[#3d444d] focus:outline-none focus:border-[#5a9ef9]"
+                        pattern="[a-zA-Z0-9]+"
                     />
 
                     <label className="block mb-2" htmlFor="password">Password</label>

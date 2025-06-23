@@ -8,7 +8,6 @@ export default function MainFooter({}) {
                 <p className="text-center">Slack - grixami</p>
                 <p className="text-center">Email - contactgrixami@gmail.com</p>
             </div>
-
         </footer>
     )
-} 
+}

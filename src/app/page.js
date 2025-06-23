@@ -1,8 +1,21 @@
+"use client";
+
 import Head from "next/head";
-import NotLoginNav from "@/components/NotLoginNav";
-import MainFooter from "@/components/MainFooter";
+import NotLoginNav from "@/components/notloginnav";
+import LoginNav from "@/components/loginnav";
+import MainFooter from "@/components/mainfooter";
+import { cookieExists } from "@/utils/cookies";
+import { useState, useDeferredValue, useEffect } from "react";
 
 export default function Home() {
+  const [isLoggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    if(cookieExists("auth_token")) {
+      setLoggedIn(true)
+    }
+  }, [])
+
   return (
     <>
       <Head>
@@ -10,7 +23,12 @@ export default function Home() {
         <meta name="description" content="A Blogging Site For Devs" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <NotLoginNav/>
+      {isLoggedIn ? (
+        <LoginNav/>
+      ) : (
+        <NotLoginNav/>
+      )}
+        
       <div>
         <div className="flex flex-col justify-center items-center py-20">
           <h1 className="text-6xl mb-3">Dev Journal</h1>

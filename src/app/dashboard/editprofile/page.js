@@ -1,0 +1,3 @@
+"use client";
+
+//TODO, WILL BE ABLE TO CUSTOMISE PFP, BIO, USERNAME
