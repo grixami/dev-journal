@@ -4,7 +4,7 @@ import { getUserNoPass } from "@/utils/prismautils";
 
 export async function GET(request) {
     const { searchParams } = new URL(request.url);
-    const id =  parseInt(searchParams.get('id'));
+    const id =  parseInt(searchParams.get("id"));
 
     const userData = await getUserNoPass(id)
     return new Response(JSON.stringify(userData), {

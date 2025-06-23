@@ -7,7 +7,7 @@ const jwtSecret = process.env.JWT_SECRET
 
 export async function GET(request) {
     const { searchParams } = new URL(request.url);
-    const token = searchParams.get('token');
+    const token = searchParams.get("token");
 
     if (!token) {
       return new Response(JSON.stringify({ message: "No token provided" }), {

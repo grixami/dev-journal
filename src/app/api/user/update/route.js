@@ -26,7 +26,7 @@ export async function POST(request) {
     if (pfp) {
         const base64String = pfp.includes(",") ? pfp.split(",")[1] : pfp;
 
-        const byteLength = (base64String.length * 3) / 4 - (base64String.endsWith('==') ? 2 : base64String.endsWith('=') ? 1 : 0);
+        const byteLength = (base64String.length * 3) / 4 - (base64String.endsWith("==") ? 2 : base64String.endsWith("=") ? 1 : 0);
 
         if (byteLength > 4 * 1024 * 1024) { // 4MB in bytes
             return new Response(JSON.stringify({ message: "Profile picture must be under 4MB" }), {

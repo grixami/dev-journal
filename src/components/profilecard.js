@@ -26,8 +26,8 @@ export default function ProfileCard({userData, editProfile}) {
         </div>
         <div className="h-[2px] bg-[#3d444d] w-full mt-5"></div>
         <h2 className="text-3xl text-start ml-10 mt-3">{userData?.username}</h2>
-        <p className="text-start ml-10">{userData?.bio}</p>
-        <p className="ml-10 mt-5">Created at - {new Date(userData?.createdAt).toLocaleString()}</p>
+        <p className="ml-10 break-words">{userData?.bio}</p> {/* Break words used so long words do not go across the boarder */}
+        <p className="text-start pl-10 mt-5">Created at - {new Date(userData?.createdAt).toLocaleString()}</p>
         {editProfile ? ( 
             <div className="mt-4 ml-10"> {/* Button for if a user can edit their profile (only on /dashboard) */}
                 <a href="/dashboard/editprofile"

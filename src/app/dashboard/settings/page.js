@@ -51,8 +51,8 @@ export default function Settings() {
             <div className="flex justify-center items-center my-10">
                 <div className="flex flex-col justify-center items-center w-2/5 border py-10 rounded-2xl">
                     <div>
-                        <h1 className="text-center">Settings</h1>
-                        <p>New Password</p>
+                        <h1 className="text-center text-3xl">Settings</h1>
+                        <p className="mt-5">New Password</p>
                         <input ref={passRef} type="password" className="border rounded-xl focus:border-[#5a9ef9] focus:outline-none px-3 py-1 mt-2"></input>
                         <button id="submit" className="bg-[#3d444d] mx-3 px-15 py-1 rounded-xl outline hover:bg-[#2c3036]"
                         onClick={handlePasswordSubmit}

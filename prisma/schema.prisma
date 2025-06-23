@@ -9,34 +9,35 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  username  String   @unique
-  password  String
-  bio       String?         @db.LongText
-  profilepic       String?   @db.LongText // will always be 128x128 b64 encoded
-  createdAt DateTime @default(now())
+  id                Int         @id @default(autoincrement())
+  username          String      @unique
+  password          String
+  bio               String?     @db.LongText
+  profilepic        String?     @db.LongText // will always be 128x128 b64 encoded
+  createdAt         DateTime    @default(now())
+  permissionLevel   Int         @default(0)                     // 0 for user, 1 for mod, 2 for admin
 
   posts     Post[]   @relation("UserPosts")
   comments  Comment[]   @relation("UserComments")
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content String   @db.LongText         // will be b64 encoded md file
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                Int         @id @default(autoincrement())
+  title             String
+  content           String      @db.LongText         // will be b64 encoded md file
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
 
   author    User     @relation("UserPosts", fields: [authorId], references: [id])
   authorId  Int
 }
 
 model Comment {
-  id        Int      @id @default(autoincrement())
-  content   String   @db.LongText 
+  id              Int      @id @default(autoincrement())
+  content         String   @db.LongText 
 
-  author    User     @relation("UserComments", fields: [authorId], references: [id])
-  authorId  Int
+  author          User     @relation("UserComments", fields: [authorId], references: [id])
+  authorId        Int
 }
 
 // TODO, comments, followers, likes

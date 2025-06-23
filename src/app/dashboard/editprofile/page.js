@@ -17,6 +17,7 @@ export default function Dashboard() {
     const fileInputRef = useRef(null);
     const usernameRef = useRef();
     const bioRef = useRef();
+    const [bioText, setBioText] = useState("");
 
     useEffect(() => {
         if (!cookieExists("auth_token")) {
@@ -98,7 +99,6 @@ export default function Dashboard() {
         setErrorBox(true)
         const data = await resp.json()
         setErrorMsg(data.message)
-
     }
     return (
         <>
@@ -163,8 +163,11 @@ export default function Dashboard() {
                         <input type="text" ref={usernameRef} className="border border-white focus:border-[#5a9ef9] focus:outline-none px-3 py-1 rounded-xl" placeholder="username..." defaultValue={userData?.username}></input>
                     </div>
                     <div className="mt-5">
-                        <p>Bio</p>
-                        <textarea ref={bioRef} className="border border-white focus:border-[#5a9ef9] focus:outline-none px-3 py-1 rounded-xl w-100 h-40 overflow-hidden resize-none" placeholder="bio..." defaultValue={userData?.bio}></textarea>
+                        <p>Bio - {bioText.length}/256</p>
+                        <textarea id="biotextarea" maxLength="256" ref={bioRef} className="border border-white focus:border-[#5a9ef9] focus:outline-none px-3 py-1 rounded-xl w-100 h-40 overflow-hidden resize-none" placeholder="bio..." defaultValue={userData?.bio}
+                        onChange={(e) => {
+                            setBioText(e.target.value);
+                        }}></textarea>
                     </div>
                     {errorBox && (
                         <div className="bg-red-600 rounded-xl px-3 py-3 border">
