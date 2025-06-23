@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client"
+import { use } from "react";
 
 const prisma = new PrismaClient();
 
@@ -72,4 +73,54 @@ export async function usernameToUserID(username) {
     }
 
     return user.id;
+}
+
+export async function updateUserProfile(id, username, bio, pfp) {
+    const user = await prisma.user.findFirst({
+        where: {id: id}
+    });
+
+    if(!user) {
+        throw new Error("User does not exist");
+    }
+
+    const existingUsername = await prisma.user.findFirst({
+        where: {
+            username: username,
+            NOT: { id: id }, // dont inclue current user
+        },
+    });
+
+    if (existingUsername) {
+        throw new Error("Username is already taken");
+    }
+    const updatedUser = await prisma.user.update({
+        where: { id: id },
+        data: {
+            username: username,
+            bio: bio,
+            profilepic: pfp
+        },
+    });
+
+    return updatedUser;
+}
+
+export async function updateUserPassword(id, password) {
+    const user = prisma.user.findFirst({
+        where: { id: id }
+    })
+
+    if(!user) {
+        throw Error("User does not exist")
+    }
+
+    const newUser = prisma.user.update({
+        where: { id: id },
+        data: {
+            password: password
+        }
+    })
+
+    return newUser
 }

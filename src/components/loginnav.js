@@ -22,7 +22,7 @@ export default function LoginNav({}) {
           <div className="flex justify-center">
             <textarea className="border focus:border-[#5a9ef9] focus:outline-none rounded-lg h-10 resize-none py-2 px-2 overflow-hidden" placeholder="search..."></textarea>
             <Image
-                className="dark:invert mx-3  border border-black rounded-full py-1 px-1 bg-[#fefbf6] hover:bg-[#9e9c95]"
+                className="cursor-pointer dark:invert mx-3  border border-black rounded-full py-1 px-1 bg-[#fefbf6] hover:bg-[#9e9c95]"
                 src="/assets/img/searchicon.svg"
                 alt="logo"
                 width={40}
@@ -31,6 +31,7 @@ export default function LoginNav({}) {
           </div>
           <nav>
             <ul className="flex justify-end px-4">
+              <li className="mx-2"><UrlButton buttonText="Settings" link="/dashboard/settings"/></li>
               <li className="mx-2"><UrlButton buttonText="Create Post" link="/dashboard/createpost"/></li>
               <li className="mx-2"><UrlButton buttonText="Dashboard" link="/dashboard"/></li>
               <li className="mx-2"><UrlButton buttonText="Logout" link="/auth/logout"/></li>

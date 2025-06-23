@@ -24,8 +24,8 @@ export async function GET(request) {
         headers: { "Content-Type": "application/json" },
       });
     } catch (error) {
-      return new Response(JSON.stringify({message:"Failed"}), {
-        status: 200,
+      return new Response(JSON.stringify({message:"Token auth failed"}), {
+        status: 400,
         headers: { "Content-Type": "application/json" },
       });
     }

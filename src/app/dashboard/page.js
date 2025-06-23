@@ -58,15 +58,15 @@ return (
                     <div className="border-2 border-white rounded-xl px-5 py-5">
                         <h2 className="text-4xl text-center">Posts</h2>
                     </div>
-                    <div className="border-2 border-white rounded-xl px-5 py-5 my-5 transform transition-transform duration-500 ease-in-out hover:-translate-x-10 hover:bg-[#35383d]">
+                    <div className="cursor-pointer border-2 border-white rounded-xl px-5 py-5 my-5 transform transition-transform duration-500 ease-in-out hover:-translate-x-10 hover:bg-[#35383d]">
                         <h2 className="text-3xl">Title 1</h2>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lobortis aliquam mi, eget ornare ex efficitur eu. Integer non erat eget ligula congue pellentesque. Cras nec consequat felis. Sed a ex vel augue elementum egestas a at odio.</p>
                     </div>
-                    <div className="border-2 border-white rounded-xl px-5 py-5 my-5 transform transition-transform duration-500 ease-in-out hover:-translate-x-10 hover:bg-[#35383d]">
+                    <div className="cursor-pointer border-2 border-white rounded-xl px-5 py-5 my-5 transform transition-transform duration-500 ease-in-out hover:-translate-x-10 hover:bg-[#35383d]">
                         <h2 className="text-3xl">Title 2</h2>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lobortis aliquam mi, eget ornare ex efficitur eu. Integer non erat eget ligula congue pellentesque. Cras nec consequat felis. Sed a ex vel augue elementum egestas a at odio.</p>
                     </div>
-                    <div className="border-2 border-white rounded-xl px-5 py-5 my-5 transform transition-transform duration-500 ease-in-out hover:-translate-x-10 hover:bg-[#35383d]">
+                    <div className="cursor-pointer border-2 border-white rounded-xl px-5 py-5 my-5 transform transition-transform duration-500 ease-in-out hover:-translate-x-10 hover:bg-[#35383d]">
                         <h2 className="text-3xl">Title 3</h2>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lobortis aliquam mi, eget ornare ex efficitur eu. Integer non erat eget ligula congue pellentesque. Cras nec consequat felis. Sed a ex vel augue elementum egestas a at odio.</p>
                     </div>

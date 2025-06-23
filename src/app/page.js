@@ -6,8 +6,11 @@ import LoginNav from "@/components/loginnav";
 import MainFooter from "@/components/mainfooter";
 import { cookieExists } from "@/utils/cookies";
 import { useState, useDeferredValue, useEffect } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
   const [isLoggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -31,7 +34,19 @@ export default function Home() {
         
       <div>
         <div className="flex flex-col justify-center items-center py-20">
-          <h1 className="text-6xl mb-3">Dev Journal</h1>
+          <div className="flex items-center">
+            <h1 className="text-6xl mb-3">Dev Journal</h1>
+            <Image
+              className="ml-3 bg-black rounded-full cursor-pointer"
+              src="/assets/img/github-mark-white.png"
+              alt="github logo"
+              width={60}
+              height={60}
+              onClick={() => {
+                router.replace("https://github.com/grixami/dev-journal")
+              }}
+            />
+          </div>
           <p>A place to blog about tech</p>
         </div>
         <div className="pt-10 flex flex-row items-center justify-center">
