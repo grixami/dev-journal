@@ -37,7 +37,7 @@ export default function Home() {
           <div className="flex items-center">
             <h1 className="text-6xl mb-3">Dev Journal</h1>
             <Image
-              className="ml-3 bg-black rounded-full cursor-pointer"
+              className="ml-3 bg-black rounded-full transition-transform duration-300 hover:scale-110 hover:-rotate-10 cursor-pointer"
               src="/assets/img/github-mark-white.png"
               alt="github logo"
               width={60}

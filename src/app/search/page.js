@@ -5,14 +5,21 @@ import Head from "next/head";
 import SearchUserProfile from "@/components/searchuserprofile"
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import TransparrentLoadingGif from "@/components/gif/transparrentloadinggif";
 
 function Search() {
     const [userData, setUserData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [noQuery, setNoQuery] = useState(false)
     const searchParams = useSearchParams()
     const query = searchParams.get("query")
     
     useEffect(() => {
+        if(query == "") {
+            setNoQuery(true)
+            setIsLoading(false)
+            return
+        }
         fetch(`/api/user/getuserlistwithstart?username=${query}&pfp=0`)
             .then(resp => resp.json())
             .then(data => {
@@ -39,12 +46,26 @@ function Search() {
                     </div>
 
                 </div>
-                {isLoading == false && userData == null && (
+                {isLoading == false && userData == null && noQuery == false && (
                     <div className="h-[30vh] flex items-center justify-center ">
                         <div className="flex items-center justify-center bg-[#35383d] p-10 rounded-4xl w-[50%]">
                             <p className="text-7xl break-words whitespace-normal max-w-full">No Results found for &quot;{query}&quot;</p>
                         </div>
                     </div>
+                )}
+                {noQuery == true && isLoading == false && (
+                    <div className="h-[30vh] flex items-center justify-center ">
+                        <div className="flex items-center justify-center bg-[#35383d] p-10 rounded-4xl w-[50%]">
+                            <p className="text-7xl break-words whitespace-normal max-w-full">Please enter your query in the navbar</p>
+                        </div>
+                    </div>    
+                )}
+                {isLoading == true && (
+                    <div className="h-[30vh] flex items-center justify-center ">
+                        <div className="flex items-center justify-center p-10 rounded-4xl w-[50%]">
+                           <TransparrentLoadingGif width={250} height={250}/>
+                        </div>
+                    </div>    
                 )}
             </div>
         </>

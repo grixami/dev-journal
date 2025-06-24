@@ -6,6 +6,7 @@ import { cookieExists, getCookie } from "@/utils/cookies";
 import Head from "next/head";
 import LoginNav from "@/components/loginnav";
 import { useRouter } from "next/navigation";
+import TransparrentLoadingGif from "@/components/gif/transparrentloadinggif";
 
 export default function Dashboard() {
     const router = useRouter()
@@ -18,6 +19,8 @@ export default function Dashboard() {
     const usernameRef = useRef();
     const bioRef = useRef();
     const [bioText, setBioText] = useState("");
+
+    const[submitted, setSubmitted] = useState(false)
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -72,6 +75,7 @@ export default function Dashboard() {
     };
 
     let handleSubmit = async (e) => {
+        setSubmitted(true)
         const username = usernameRef.current.value;
         const bio = bioRef.current.value;
 
@@ -95,6 +99,7 @@ export default function Dashboard() {
         setErrorBox(true)
         const data = await resp.json()
         setErrorMsg(data.message)
+        setSubmitted(false)
     }
     return (
         <>
@@ -171,9 +176,16 @@ export default function Dashboard() {
                         </div>
                     )}
                     <div className="mt-5">
-                        <button id="submit" className="bg-[#3d444d] px-15 py-1 rounded-xl outline hover:bg-[#2c3036]"
-                        onClick={handleSubmit}
-                        >Submit</button>
+
+                        {submitted ? (
+                            <TransparrentLoadingGif className="mx-auto block"/>
+
+                        ) : (
+                            <button id="submit" className="bg-[#3d444d] px-15 py-1 rounded-xl outline hover:bg-[#2c3036]"
+                            onClick={handleSubmit}
+                            >Submit</button>
+
+                        )}
                     </div>
                 </div>
             </div>
