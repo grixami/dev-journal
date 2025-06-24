@@ -1,7 +1,14 @@
+"use client";
+
 import Head from "next/head"
 import LoginNav from "@/components/loginnav"
+import { Suspense } from "react"
+import { useSearchParams } from "next/navigation"
 
-export default function PreviewPost() {
+function Contnent() {
+    const searchParams = useSearchParams()
+
+    const content = searchParams.get("content")
     return(
         <>
             <Head>
@@ -10,8 +17,16 @@ export default function PreviewPost() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
             <div>
-                
+                <pre>{decodeURIComponent(content)}</pre>
             </div>
         </>
+    )
+}
+
+export default function PostPreview() {
+    return (
+        <Suspense>
+            <Contnent/>
+        </Suspense>
     )
 }

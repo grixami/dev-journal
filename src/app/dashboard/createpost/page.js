@@ -1,7 +1,19 @@
+"use client";
+
 import Head from "next/head"
 import LoginNav from "@/components/loginnav"
+import { useState } from "react"
+import { useRouter } from "next/navigation";
 
 export default function CreatePost() {
+    const [editorText, setEditorText] = useState("")
+    const router = useRouter()
+
+    let handlePreviewButttonSubmit = async () => {
+        //console.log(encodeURIComponent(editorText))
+        router.replace(`/dashboard/createpost/preview?content=${encodeURIComponent(editorText)}`)
+    }
+
     return(
         <>
             <Head>
@@ -13,13 +25,14 @@ export default function CreatePost() {
                 <div className="h-[100vh]">
                 <LoginNav/>
                 <div className="flex scrollbar h-full">
-                    <lable htmlFor="my-editor" className="block w-full border-r-2 border-[#3d444d]">
+                    <label htmlFor="my-editor" className="block w-full border-r-2 border-[#3d444d]">
                         <textarea
-                            name="my-editor"
+                            id="my-editor"
                             className="w-full h-full resize-none outline-none scrollbar scrollbar-thumb-white"
                             placeholder="Start typing..."
+                            onChange={(e) => setEditorText(e.target.value) }
                         />
-                    </lable>
+                    </label>
                     <div className="w-[30%] bg-[#010409]">
                         <div className="border h-full">
                             <div className="flex items-center justify-center">
@@ -28,7 +41,9 @@ export default function CreatePost() {
 
                                     </div>
 
-                                    <button className="relative bg-[#010409] rounded-3xl px-15 py-2 border-2 group-hover:cursor-pointer">
+                                    <button className="relative bg-[#010409] rounded-3xl px-15 py-2 border-2 group-hover:cursor-pointer"
+                                    onClick={handlePreviewButttonSubmit}
+                                    >
                                         <p className="text-xl">Preview</p>
                                     </button>
                                 </div>
@@ -37,7 +52,7 @@ export default function CreatePost() {
                             <div className="flex items-center justify-center mt-4">
                                 <form className="w-full">
                                     <div className="flex flex-col items-center justify-center w-full">
-                                        <lable htmlFor="title" className="text-center text-2xl">Post Title</lable>
+                                        <label htmlFor="title" className="text-center text-2xl">Post Title</label>
                                         <input type="text" name="title" className="border-2 w-[80%] rounded-3xl px-4 py-2 border-white focus:border-[#5a9ef9] focus:outline-none mt-2"></input>
                                     </div>
                                     <div className="flex flex-col items-center justify-center mt-4 w-full">
