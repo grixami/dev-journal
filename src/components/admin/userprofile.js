@@ -31,10 +31,6 @@ export default function AdminManageUserProfile({userId, username, bio}) {
     }
 
     let handleBanClick = async (e) => {
-        const code = await sendRequest("ban", {userId})
-        if(code != 200) {
-            return
-        }
         const element = document.getElementById(`${userId}`)
         const newspaperSpinning = [
             { transform: "rotate(0) scale(1)" },
@@ -53,15 +49,13 @@ export default function AdminManageUserProfile({userId, username, bio}) {
         animation.finished.then(() => {
             element.remove();
         });
+        await sendRequest("ban", {userId})
     }
 
     let handleAdminClick = async (e) => {
-        const code = await sendRequest("adminify", {userId})
-        if(code != 200) {
-            return
-        }
         const element = document.getElementById(`${userId}`)
         element.style.backgroundColor = "green"
+        await sendRequest("adminify", {userId})
     }
 
     return(

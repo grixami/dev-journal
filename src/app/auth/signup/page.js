@@ -1,6 +1,7 @@
 "use client";
 import Head from "next/head";
 import NotLoginNav from "@/components/notloginnav";
+import TransparrentLoadingGif from "@/components/gif/transparrentloadinggif";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { cookieExists } from "@/utils/cookies";
@@ -11,6 +12,7 @@ export default function Signup() {
     const [isRegistered, setIsRegistered] = useState(false);
     const [isRegistrationFailed, setIsRegistrationFailed] = useState(false);
     const [failMessage, setFailMessage] = useState(""); // starts as empty string
+    const [submitted, setSubmitted] = useState(false)
     
       useEffect(() => {
         if(cookieExists("auth_token")) {
@@ -22,6 +24,7 @@ export default function Signup() {
 
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevents form from submitting
+        setSubmitted(true)
         setIsRegistered(false)
         setIsRegistrationFailed(false)
         const username = e.target.username.value;
@@ -49,6 +52,7 @@ export default function Signup() {
         } catch(error) {
           console.error('Error during signup:', error);
         }
+        setSubmitted(false)
 
   };
   return (
@@ -78,7 +82,12 @@ export default function Signup() {
                         type="password" id="password" name="password" placeholder="Enter your password" required
                         className="w-full mb-4 rounded-md p-2 bg-[#1a1f21] border border-[#3d444d] focus:outline-none focus:border-[#5a9ef]"
                     />
-                    <button type="submit"className="mx-auto block border border-[#f0f6fc] px-4 py-2 rounded-lg hover:bg-[#35383d]">Sign Up</button>
+                    {submitted ? (
+                      <TransparrentLoadingGif className="mx-auto block"/>
+                    ) : (
+                      <button type="submit"className="mx-auto block border border-[#f0f6fc] px-4 py-2 rounded-lg hover:bg-[#35383d]">Sign Up</button>
+                    )}
+
                 </form>
             </div>
           {isRegistered && (
@@ -91,6 +100,7 @@ export default function Signup() {
               <p>Registration Failed, {failMessage}, please try again</p>
             </div>
           )}
+
         </div>
       </div>
       </div>

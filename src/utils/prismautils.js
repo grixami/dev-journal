@@ -14,6 +14,7 @@ export async function createUser(username, password) {
 
     const newUser = await prisma.user.create({
         data: {
+            //permissionlevel: 2,
             username: username,
             password: password,
         }
@@ -157,8 +158,7 @@ export async function checkUserAdmin(id) {
     if(!user) {
         throw Error("User does not exist")
     }
-
-    if(user.permissionlevel !=2 ) {
+    if(user.permissionlevel != 2 ) {
         return false
     }
     return true

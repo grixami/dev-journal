@@ -21,7 +21,7 @@ export async function POST(request) {
     }
 
     const userId = await usernameToUserID(username);
-    const isAdmin = checkUserAdmin(userId) 
+    const isAdmin = await checkUserAdmin(userId) 
     const token = jwt.sign({userId: userId, isAdmin: isAdmin}, jwtSecret);
 
     return new Response(JSON.stringify({ message: "sucess", token: token }), {

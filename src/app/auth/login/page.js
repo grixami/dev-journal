@@ -4,10 +4,12 @@ import NotLoginNav from "@/components/notloginnav";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { cookieExists } from "@/utils/cookies";
+import TransparrentLoadingGif from "@/components/gif/transparrentloadinggif";
 
 export default function Login() {
     const [isError, setIsError] = useState(false)
     const [errorMessage, setErrorMessage] = useState(null)
+    const [submitted, setSubmitted] = useState(false)
     const router = useRouter();
 
     useEffect(() => {
@@ -18,6 +20,7 @@ export default function Login() {
     }, [router]);
 
     const handleSubmit = async (e) => {
+        setSubmitted(true)
         e.preventDefault(); // Prevents form from submitting
         const username = e.target.username.value;
         const password = e.target.password.value
@@ -38,14 +41,17 @@ export default function Login() {
           if(resp.status != 200) {
             setIsError(true);
             setErrorMessage(data.message);
+            setSubmitted(false)
             return;
           }
+          
         
           document.cookie = `auth_token=${data.token}; path=/;`;
           router.replace("/dashboard");
         } catch(error) {
           console.log("Error duting login", error);
         }
+        setSubmitted(false)
 
   };
   return (
@@ -74,7 +80,11 @@ export default function Login() {
                         type="password" id="password" name="password" placeholder="Enter your password" required
                         className="w-full mb-4 rounded-md p-2 bg-[#1a1f21] border border-[#3d444d] focus:outline-none focus:border-[#5a9ef]"
                     />
-                    <button type="submit"className="mx-auto block border border-[#f0f6fc] px-4 py-2 rounded-lg hover:bg-[#35383d]">Login</button>
+                    {submitted ? (
+                      <TransparrentLoadingGif className="mx-auto block"/>
+                    ) : (
+                      <button type="submit"className="mx-auto block border border-[#f0f6fc] px-4 py-2 rounded-lg hover:bg-[#35383d]">Sign Up</button>
+                    )}
                 </form>
             </div>
             {isError && (
