@@ -4,7 +4,8 @@ export async function GET(request) {
     try {
     const { searchParams } = new URL(request.url);
     const usernameSearch = searchParams.get("username");
-    const users = await getUsersStartsWith(usernameSearch, false) 
+    const getPfp = searchParams.get("pfp");
+    const users = await getUsersStartsWith(usernameSearch, parseInt(getPfp)) 
     return new Response(JSON.stringify(users), {
         status: 200
     })

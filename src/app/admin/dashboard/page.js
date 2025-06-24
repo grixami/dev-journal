@@ -17,7 +17,7 @@ export default function AdminDashboard() {
     const testNum = 16;
     
     useEffect(() => {
-        fetch(`/api/user/getuserlistwithstart?username=${usernameSearch}`)
+        fetch(`/api/user/getuserlistwithstart?username=${usernameSearch}&pfp=0`)
             .then((resp) => resp.json())
             .then((data) => {
                 setUserInfo(data)
