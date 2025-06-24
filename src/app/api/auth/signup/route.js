@@ -1,15 +1,13 @@
 "use server";
-
-// TODO, rate limiting
-
 import { createUser } from "@/utils/prismautils";
 import { encrypt } from "@/utils/api/stringencryption";
 
 const re = new RegExp("^[a-zA-Z0-9]+$"); // Ensures that the user will not be created, if they change the html to bypass the pattern
 
 export async function POST(request) {
+
   try {
-    
+
     let { username, password } = await request.json();
     let preHashPass = password
     password = encrypt(password)

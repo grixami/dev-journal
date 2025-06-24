@@ -9,7 +9,7 @@ export default function LoginNav({}) {
         <div className="w-full flex items-center justify-between px-4">
           <Link href="/">
           <div className="flex items-center gap-0">
-          <h1 className="font-bold text-3xl px-2 pl-20">Dev Journal</h1>
+          <h1 className="font-bold text-3xl px-2 pl-20 ">Dev Journal</h1>
             <Image
                 className="dark:invert"
                 src="/assets/img/logo.png"
@@ -24,7 +24,7 @@ export default function LoginNav({}) {
               <input type="text" name="query" className="border focus:border-[#5a9ef9] focus:outline-none rounded-lg h-10 resize-none py-2 px-2 overflow-hidden" placeholder="search..."></input>
               <button type="submit">
               <Image
-                  className="cursor-pointer align-middle dark:invert mx-3  border border-black rounded-full py-1 px-1 bg-[#fefbf6] hover:bg-[#9e9c95]"
+                  className="cursor-pointer align-middle dark:invert mx-3  border border-black rounded-full py-1 px-1 bg-[#fefbf6] hover:bg-[#9e9c95] duration-300 transition-transform ease-in-out hover:scale-110 hover:rotate-30"
                   src="/assets/img/searchicon.svg"
                   alt="logo"
                   width={40}
