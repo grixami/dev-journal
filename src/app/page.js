@@ -22,7 +22,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>dev-jornal</title>
+        <title>dev-journal</title>
         <meta name="description" content="A Blogging Site For Devs" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
