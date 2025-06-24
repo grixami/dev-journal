@@ -20,12 +20,8 @@ export default function Dashboard() {
     const [bioText, setBioText] = useState("");
 
     useEffect(() => {
-        if (!cookieExists("auth_token")) {
-            router.replace("/");
-            return;
-        }
         const fetchUser = async () => {
-        const token = getCookie("auth_token");
+            const token = getCookie("auth_token");
 
             try {
                 const resp = await fetch(`/api/user/getself?token=${token}`, {

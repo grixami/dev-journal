@@ -53,7 +53,8 @@ export async function getUserNoPass(id) {
             username: true,
             bio: true,
             profilepic: true,
-            createdAt: true
+            createdAt: true,
+            permissionlevel: true
         }
     });
 
@@ -145,4 +146,47 @@ export async function getUsersStartsWith(usernameStart, pfp) { // for searching
     }
 
     return users;
+}
+
+export async function checkUserAdmin(id) {
+    const user = await prisma.user.findFirst({
+        where: { id: id},
+        select: { permissionlevel: true }
+    })
+    
+    if(!user) {
+        throw Error("User does not exist")
+    }
+
+    if(user.permissionlevel !=2 ) {
+        return false
+    }
+    return true
+}
+
+export async function deleteUser(id) {
+    const user = await prisma.user.delete({
+        where: { id: id},
+        select: { permissionlevel: true }
+    })
+}
+
+
+export async function updatePermissionLevel(id, permissionlevel) {
+    const user = await prisma.user.findFirst({
+        where: { id: id }
+    })
+
+    if(!user) {
+        throw Error("User does not exist")
+    }
+
+    const newUser = prisma.user.update({
+        where: { id: id },
+        data: {
+            permissionlevel: permissionlevel
+        }
+    })
+
+    return newUser
 }

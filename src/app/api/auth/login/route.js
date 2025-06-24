@@ -1,6 +1,6 @@
 "use server";
 
-import { getUserPassword, usernameToUserID } from "@/utils/prismautils";
+import { getUserPassword, usernameToUserID, checkUserAdmin } from "@/utils/prismautils";
 import { compare } from "@/utils/api/stringencryption"
 
 const jwt = require("jsonwebtoken")
@@ -21,7 +21,8 @@ export async function POST(request) {
     }
 
     const userId = await usernameToUserID(username);
-    const token = jwt.sign({userId: userId}, jwtSecret);
+    const isAdmin = checkUserAdmin(userId) 
+    const token = jwt.sign({userId: userId, isAdmin: isAdmin}, jwtSecret);
 
     return new Response(JSON.stringify({ message: "sucess", token: token }), {
       status: 200,

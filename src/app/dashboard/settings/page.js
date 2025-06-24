@@ -12,12 +12,6 @@ export default function Settings() {
     const [errorBox, setErrorBox] = useState(false);
     const [errorMsg, setErrorMsg] = useState(null);
 
-    useEffect(() => {
-        if(!cookieExists("auth_token")) {
-            router.replace("/")
-        }
-    }, [router])
-
     let handlePasswordSubmit = async (e) => {
         const resp = await fetch("/api/user/updatepassword", {
             method: "POST",

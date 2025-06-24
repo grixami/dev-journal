@@ -12,9 +12,6 @@ export default function Dashboard() {
     const router = useRouter();
 
     useEffect(() => {
-        if (!Cookies.get("auth_token")) {
-            router.replace("/");
-        }
         const token = Cookies.get("auth_token");
 
         const fetchUser = async () => {
