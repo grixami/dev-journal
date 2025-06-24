@@ -2,17 +2,25 @@
 
 import Head from "next/head"
 import LoginNav from "@/components/loginnav"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation";
+import RenderMarkdown from "@/components/md/mdrender";
+import Image from "next/image";
 
 export default function CreatePost() {
     const [editorText, setEditorText] = useState("")
+    const [showEditor, setShowEditor] = useState(true)
     const router = useRouter()
+    useEffect(() => {
+        const handleBeforeUnload = (e) => {
+            e.preventDefault();
+        };
 
-    let handlePreviewButttonSubmit = async () => {
-        //console.log(encodeURIComponent(editorText))
-        router.replace(`/dashboard/createpost/preview?content=${encodeURIComponent(editorText)}`)
-    }
+        window.addEventListener("beforeunload", handleBeforeUnload);
+        return () => {
+        window.removeEventListener("beforeunload", handleBeforeUnload);
+        };
+    }, []);
 
     return(
         <>
@@ -21,7 +29,8 @@ export default function CreatePost() {
                 <meta name="description" content="A Blogging Site For Devs" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
-            <div className="h-full">
+            {showEditor ? (
+            <div className="h-full" id="editor">
                 <div className="h-[100vh]">
                 <LoginNav/>
                 <div className="flex scrollbar h-full">
@@ -30,6 +39,7 @@ export default function CreatePost() {
                             id="my-editor"
                             className="w-full h-full resize-none outline-none scrollbar scrollbar-thumb-white"
                             placeholder="Start typing..."
+                            defaultValue={editorText}
                             onChange={(e) => setEditorText(e.target.value) }
                         />
                     </label>
@@ -42,7 +52,7 @@ export default function CreatePost() {
                                     </div>
 
                                     <button className="relative bg-[#010409] rounded-3xl px-15 py-2 border-2 group-hover:cursor-pointer"
-                                    onClick={handlePreviewButttonSubmit}
+                                    onClick={() => {setShowEditor(false)}}
                                     >
                                         <p className="text-xl">Preview</p>
                                     </button>
@@ -61,12 +71,12 @@ export default function CreatePost() {
                                     </div>
                                     <div className="flex items-center justify-center mt-4 space-x-3">
                                         <input type="radio" id="publish" name="postType" value="publish" defaultChecked className="hidden peer/publish"></input>
-                                        <label htmlFor="publish" className="hover:cursor-pointer border-2 border-white p-3 rounded-3xl bg-[#010409] peer-checked/publish:bg-red-600 peer-checked/publish:scale-105 transition duration-600">
+                                        <label htmlFor="publish" className="hover:cursor-pointer border-2 border-white p-3 rounded-3xl bg-[#010409] peer-checked/publish:bg-red-600 peer-checked/publish:scale-105 transition-transform duration-600">
                                             Publish
                                         </label>
 
                                         <input type="radio" id="draft" name="postType" value="draft" className="hidden peer/draft"></input>
-                                        <label htmlFor="draft" className="hover:cursor-pointer border-2 border-white p-3 rounded-3xl bg-[#010409] peer-checked/draft:bg-red-600 peer-checked/draft:scale-110 transition duration-600">
+                                        <label htmlFor="draft" className="hover:cursor-pointer border-2 border-white p-3 rounded-3xl bg-[#010409] peer-checked/draft:bg-red-600 peer-checked/draft:scale-110 transition-transform duration-600">
                                             Draft
                                         </label>       
                                     </div>
@@ -84,6 +94,33 @@ export default function CreatePost() {
                 </div>
                 </div>
             </div>
+            ) : (
+
+            <div className="h-full" id="preview">
+                <div>
+                    <div className="p-10">
+                        <RenderMarkdown contentParam={editorText}/>
+                    </div>
+                    <div className="group">
+                        <div className="top-[10%] right-[10%] fixed group transition-transform duration-300 ease-in-out hover:scale-105 hover:-rotate-10">
+                            <div className="absolute -inset-1 rounded-full blur bg-amber-50"></div>
+
+                            <button className="relative bg-black p-5 rounded-full hover:cursor-pointer"
+                            onClick={() => setShowEditor(true)}>
+                                <Image
+                                    className="dark:invert"
+                                    src="/assets/img/arrow.png"
+                                    alt="backArrow"
+                                    width={100}
+                                    height={100}
+                                />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            )}
+
         </>
     )
 }
