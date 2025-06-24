@@ -3,10 +3,10 @@
 import LoginNav from "@/components/loginnav";
 import Head from "next/head";
 import SearchUserProfile from "@/components/searchuserprofile"
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
-export default function Search() {
+function Search() {
     const [userData, setUserData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const searchParams = useSearchParams()
@@ -49,4 +49,12 @@ export default function Search() {
             </div>
         </>
     )
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense>
+      <Search />
+    </Suspense>
+  );
 }

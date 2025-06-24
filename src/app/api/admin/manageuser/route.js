@@ -3,12 +3,6 @@ import { checkUserAdmin, deleteUser, updatePermissionLevel } from "@/utils/prism
 
 const jwtSecret = process.env.JWT_SECRET;
 
-if (!jwtSecret) {
-    return new Response(JSON.stringify({ message: "JWT secret not configured" }), {
-        status: 500
-    });
-}
-
 export async function POST(request) {
     try {
         const { action, user, token } = await request.json();

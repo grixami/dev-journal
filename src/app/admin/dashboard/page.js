@@ -5,9 +5,9 @@ import Head from "next/head"
 import AdminManageUserProfile from "@/components/admin/userprofile"
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 
-export default function AdminDashboard() {
+function AdminDashboard() {
     const [userInfo, setUserInfo] = useState(null)
     const [isLoading, setIsLoading] = useState(true) // ensures the messages like "NoUserFound" dont show up for a split second
     
@@ -82,4 +82,12 @@ export default function AdminDashboard() {
             </div>
         </>
     )
+}
+
+export default function AdminDashboardPage() {
+  return (
+    <Suspense>
+      <AdminDashboard />
+    </Suspense>
+  );
 }
