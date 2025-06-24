@@ -125,12 +125,18 @@ export async function updateUserPassword(id, password) {
     return newUser
 }
 
-export async function getUsersStartsWith(usernameStart) { // for searching
+export async function getUsersStartsWith(usernameStart, pfp) { // for searching
     const users = await prisma.user.findMany({
         where: {
             username: {
                 startsWith: usernameStart
             }
+        }, 
+        select: {
+            username: true,
+            bio: true,
+            id: true,
+            profilepic: pfp
         }
     })  
 
