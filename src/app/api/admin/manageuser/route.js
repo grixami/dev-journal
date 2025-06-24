@@ -1,8 +1,13 @@
-import { use } from "react";
 const jwt = require("jsonwebtoken");
 import { checkUserAdmin, deleteUser, updatePermissionLevel } from "@/utils/prismautils";
 
 const jwtSecret = process.env.JWT_SECRET;
+
+if (!jwtSecret) {
+    return new Response(JSON.stringify({ message: "JWT secret not configured" }), {
+        status: 500
+    });
+}
 
 export async function POST(request) {
     try {
