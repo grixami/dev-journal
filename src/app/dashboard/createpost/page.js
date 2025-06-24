@@ -9,16 +9,17 @@ export default function CreatePost() {
                 <meta name="description" content="A Blogging Site For Devs" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
-            <div>
+            <div className="h-full">
+                <div className="h-[100vh]">
                 <LoginNav/>
-                <div className="flex scrollbar">
-                    <label htmlFor="my-editor" className="block w-full h-[90vh] border-r-2 border-[#3d444d]">
+                <div className="flex scrollbar h-full">
+                    <lable htmlFor="my-editor" className="block w-full border-r-2 border-[#3d444d]">
                         <textarea
                             name="my-editor"
                             className="w-full h-full resize-none outline-none scrollbar scrollbar-thumb-white"
                             placeholder="Start typing..."
                         />
-                    </label>
+                    </lable>
                     <div className="w-[30%] bg-[#010409]">
                         <div className="border h-full">
                             <div className="flex items-center justify-center">
@@ -65,6 +66,7 @@ export default function CreatePost() {
                         </div>
                     </div>
 
+                </div>
                 </div>
             </div>
         </>

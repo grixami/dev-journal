@@ -20,7 +20,9 @@
     "next-rate-limit": "^0.0.3",
     "rate-limiter-flexible": "^7.1.1",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "remark": "^15.0.1",
+    "remark-html": "^16.0.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
