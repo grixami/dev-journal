@@ -28,11 +28,38 @@ export default function CreatePost() {
                                     </div>
 
                                     <button className="relative bg-[#010409] rounded-3xl px-15 py-2 border-2 group-hover:cursor-pointer">
-                                        <p>Preview</p>
+                                        <p className="text-xl">Preview</p>
                                     </button>
                                 </div>
-                                <form>
-                                    {/* TODO, the rest of the form and add functionality */}
+                            </div>
+                            <hr className="border-t-2"></hr>
+                            <div className="flex items-center justify-center mt-4">
+                                <form className="w-full">
+                                    <div className="flex flex-col items-center justify-center w-full">
+                                        <lable htmlFor="title" className="text-center text-2xl">Post Title</lable>
+                                        <input type="text" name="title" className="border-2 w-[80%] rounded-3xl px-4 py-2 border-white focus:border-[#5a9ef9] focus:outline-none mt-2"></input>
+                                    </div>
+                                    <div className="flex flex-col items-center justify-center mt-4 w-full">
+                                        <label htmlFor="description" className="text-2xl">Post Description</label>
+                                        <textarea id="description" name="description" rows="7" className="mt-4 w-[80%] p-2 rounded-3xl resize-none focus:outline-none border-2 border-white focus:border-[#5a9ef9]"></textarea>
+                                    </div>
+                                    <div className="flex items-center justify-center mt-4 space-x-3">
+                                        <input type="radio" id="publish" name="postType" value="publish" defaultChecked className="hidden peer/publish"></input>
+                                        <label htmlFor="publish" className="hover:cursor-pointer border-2 border-white p-3 rounded-3xl bg-[#010409] peer-checked/publish:bg-red-600 peer-checked/publish:scale-105 transition duration-600">
+                                            Publish
+                                        </label>
+
+                                        <input type="radio" id="draft" name="postType" value="draft" className="hidden peer/draft"></input>
+                                        <label htmlFor="draft" className="hover:cursor-pointer border-2 border-white p-3 rounded-3xl bg-[#010409] peer-checked/draft:bg-red-600 peer-checked/draft:scale-110 transition duration-600">
+                                            Draft
+                                        </label>       
+                                    </div>
+                                    <hr className="border-t-2 mt-4"></hr>
+                                    <div className="flex items-center justify-center mt-4">
+                                        <button type="submit" className="bg-[#010409] px-10 py-2 rounded-4xl border-2 border-white hover:cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105">
+                                            <p className="text-4xl text-center"><b>post</b></p>
+                                        </button>
+                                    </div>
                                 </form>
                             </div>
                         </div>

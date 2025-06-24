@@ -38,7 +38,7 @@ function Search() {
             </Head>
             <div className="flex flex-col h-screen">
                 <LoginNav/>
-                <div className="flex overflow-y-auto scrollbar scrollbar-thumb-white ">
+                <div className="flex overflow-y-auto scrollbar scrollbar-thumb-white">
                     <div className="flex flex-col space-y-5 mt-10 w-3/5 ml-[10%]">
                         {userData != null && userData.map((user) => (
                             <SearchUserProfile key={user.id} userId={user.id} username={user.username} bio={user.bio} pfp={user.profilepic}/>
