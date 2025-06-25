@@ -2,25 +2,68 @@
 
 import Head from "next/head"
 import LoginNav from "@/components/loginnav"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation";
 import RenderMarkdown from "@/components/md/mdrender";
 import Image from "next/image";
+import Draggable from "react-draggable";
+import MdDraggableEditor from "@/components/md/mdeditorpanel";
 
 export default function CreatePost() {
     const [editorText, setEditorText] = useState("")
     const [showEditor, setShowEditor] = useState(true)
+
+    const [postTitle, setPostTitle] = useState("")
+    const [postDesc, setPostDesc] = useState("")
+
+    const [uploadBox, setUploadBox] = useState(false)
+
+    const draggableRef = useRef(null);
     const router = useRouter()
+
+    const [unloadWarningEnabled, setUnloadWarningEnabled] = useState(true);
+
     useEffect(() => {
         const handleBeforeUnload = (e) => {
             e.preventDefault();
         };
-
-        window.addEventListener("beforeunload", handleBeforeUnload);
+        if(unloadWarningEnabled == true) {
+            window.addEventListener("beforeunload", handleBeforeUnload);    
+        }
+        
         return () => {
-        window.removeEventListener("beforeunload", handleBeforeUnload);
+            window.removeEventListener("beforeunload", handleBeforeUnload);
         };
-    }, []);
+    }, [unloadWarningEnabled]);
+
+    const addToTextArea = function (text_to_add) { // from https://codepen.io/Fantantonio/pen/oNdreeB
+        let textarea = document.getElementById("my-editor");
+        let start_position = textarea.selectionStart;
+        let end_position = textarea.selectionEnd;
+
+        textarea.value = `${textarea.value.substring(
+            0,
+            start_position
+        )}${text_to_add}${textarea.value.substring(
+            end_position,
+            textarea.value.length
+        )}`;
+
+        setEditorText(textarea.value) // so if a user previews, it is not lost
+    };
+
+    const toggleUploadBox = function () {
+        const editor = document.getElementById("editor");
+        if(!uploadBox) {
+            setUploadBox(true)
+            editor.className = "h-[100vh] blur"
+        } else {
+            setUploadBox(false)
+            editor.className = "h-[100vh]"
+        }
+
+    }
+
 
     return(
         <>
@@ -30,10 +73,14 @@ export default function CreatePost() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
             </Head>
             {showEditor ? (
-            <div className="h-full" id="editor">
-                <div className="h-[100vh]">
+            <div className="h-full">
+                <div id="editor" className="h-[100vh]">
+
                 <LoginNav/>
+                <MdDraggableEditor addToTextArea={addToTextArea}/>
+
                 <div className="flex scrollbar h-full">
+                    
                     <label htmlFor="my-editor" className="block w-full border-r-2 border-[#3d444d]">
                         <textarea
                             id="my-editor"
@@ -60,14 +107,16 @@ export default function CreatePost() {
                             </div>
                             <hr className="border-t-2"></hr>
                             <div className="flex items-center justify-center mt-4">
-                                <form className="w-full">
+                                <div className="w-full">
                                     <div className="flex flex-col items-center justify-center w-full">
                                         <label htmlFor="title" className="text-center text-2xl">Post Title</label>
-                                        <input type="text" name="title" className="border-2 w-[80%] rounded-3xl px-4 py-2 border-white focus:border-[#5a9ef9] focus:outline-none mt-2"></input>
+                                        <input type="text" name="title" defaultValue={postTitle} className="border-2 w-[80%] rounded-3xl px-4 py-2 border-white focus:border-[#5a9ef9] focus:outline-none mt-2"
+                                        onChange={(e) => setPostTitle(e.target.value)}></input>
                                     </div>
                                     <div className="flex flex-col items-center justify-center mt-4 w-full">
                                         <label htmlFor="description" className="text-2xl">Post Description</label>
-                                        <textarea id="description" name="description" rows="7" className="mt-4 w-[80%] p-2 rounded-3xl resize-none focus:outline-none border-2 border-white focus:border-[#5a9ef9]"></textarea>
+                                        <textarea id="description" name="description" rows="7" defaultValue={postDesc} className="mt-4 w-[80%] p-2 rounded-3xl resize-none focus:outline-none border-2 border-white focus:border-[#5a9ef9]"
+                                        onChange={(e) => setPostDesc(e.target.value)}></textarea>
                                     </div>
                                     <div className="flex items-center justify-center mt-4 space-x-3">
                                         <input type="radio" id="publish" name="postType" value="publish" defaultChecked className="hidden peer/publish"></input>
@@ -82,18 +131,57 @@ export default function CreatePost() {
                                     </div>
                                     <hr className="border-t-2 mt-4"></hr>
                                     <div className="flex items-center justify-center mt-4">
-                                        <button type="submit" className="bg-[#010409] px-10 py-2 rounded-4xl border-2 border-white hover:cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105">
+                                        <button className="bg-[#010409] px-10 py-2 rounded-4xl border-2 border-white hover:cursor-pointer transition-transform duration-300 ease-in-out hover:scale-105"
+                                        onClick={() => toggleUploadBox()}>
                                             <p className="text-4xl text-center"><b>post</b></p>
                                         </button>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
 
                 </div>
                 </div>
+            {uploadBox == true && (
+            <div className="z-220 fixed inset-0 bg-black/75">
+                <div className="z-30 absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2">
+                    <div className="flex flex-col bg-black rounded-4xl">
+                        <h1 className="pt-10 px-15 text-2xl">Are you sure you want to upload?</h1>
+                        <div className="flex justify-center items-center pt-20 space-x-10">
+                            <div className="flex items-center justify-center">
+                                <div className="my-[6%] relative transition-transform duration-300 ease-in-out hover:scale-105 group">
+                                    <div className="absolute inset-0 opacity-0 rounded-3xl blur group-hover:opacity-100 group-hover:bg-amber-50">
+
+                                    </div>
+
+                                <button className="relative bg-[#010409] rounded-3xl px-15 py-2 border-2 group-hover:cursor-pointer"
+                                onClick={() => toggleUploadBox()}
+                                >
+                                    <p className="text-xl">Cancel</p>
+                                </button>
+                                </div>
+                            </div>
+                            <div className="flex items-center justify-center">
+                                <div className="my-[6%] relative transition-transform duration-300 ease-in-out hover:scale-105 group">
+                                    <div className="absolute inset-0 opacity-0 rounded-3xl blur group-hover:opacity-100 group-hover:bg-amber-50">
+
+                                    </div>
+
+                                <button className="relative bg-[#010409] rounded-3xl px-15 py-2 border-2 group-hover:cursor-pointer"
+                                onClick={() => alert("TODO")}
+                                >
+                                    <p className="text-xl">Submit</p>
+                                </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+            )}
+            </div>
+            
             ) : (
 
             <div className="h-full" id="preview">
@@ -120,7 +208,6 @@ export default function CreatePost() {
                 </div>
             </div>
             )}
-
         </>
     )
 }

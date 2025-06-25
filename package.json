@@ -23,6 +23,7 @@
     "rate-limiter-flexible": "^7.1.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-draggable": "^4.4.6",
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.1",
     "remark-html": "^16.0.1"
