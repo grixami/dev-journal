@@ -29,10 +29,17 @@ export default function ProfileCard({userData, editProfile}) {
         <p className="ml-10 break-words">{userData?.bio}</p> {/* Break words used so long words do not go across the boarder */}
         <p className="text-start pl-10 mt-5">Created at - {new Date(userData?.createdAt).toLocaleString()}</p>
         {editProfile ? ( 
-            <div className="mt-4 ml-10"> {/* Button for if a user can edit their profile (only on /dashboard) */}
-                <a href="/dashboard/editprofile"
-                className="bg-[#3d444d] px-10 py-2 rounded-xl border hover:bg-[#2c3036]"
-                >Edit Profile</a>
+            <div className="flex">
+                <div className="mt-4 ml-10"> {/* Button for if a user can edit their profile (only on /dashboard) */}
+                    <a href="/dashboard/editprofile"
+                    className="bg-[#3d444d] px-10 py-2 rounded-xl border hover:bg-[#2c3036]"
+                    >Edit Profile</a>
+                </div>
+                <div className="mt-4 ml-5"> {/* Button for if a user can edit their profile (only on /dashboard) */}
+                    <a href="/dashboard/drafts"
+                    className="bg-[#3d444d] px-10 py-2 rounded-xl border hover:bg-[#2c3036]"
+                    >Drafts</a>
+                </div>
             </div>
         ) : (
             <></>

@@ -18,7 +18,6 @@ model User {
   permissionlevel   Int         @default(0)                     // 0 for user, 1 for mod, 2 for admin
 
   posts     Post[]   @relation("UserPosts")
-  comments  Comment[]   @relation("UserComments")
 }
 
 model Post {

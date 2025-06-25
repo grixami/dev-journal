@@ -249,3 +249,14 @@ export async function getPostsWithTitle(title) {
 
     return posts
 }
+
+export async function getPostDrafts(userId) {
+    const posts = await prisma.post.findMany({
+        where: {
+            authorId: userId,
+            isPublic: 0
+        }
+    })
+
+    return posts
+}
