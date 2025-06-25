@@ -1,6 +1,6 @@
 "use server";
 
-import { getPostDrafts } from "@/utils/prismautils";
+import { getPostDrafts } from "@/utils/prisma/utils/posts";
 
 const jwt = require("jsonwebtoken")
 const jwtSecret = process.env.JWT_SECRET

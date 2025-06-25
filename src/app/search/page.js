@@ -97,7 +97,7 @@ function Search() {
                             <p className="text-center text-9xl">No posts found</p>
                         </div>
                     )}
-                    {display === "users" && postData && postData.length == 0 && (
+                    {display === "users" && !userData && !noQuery && (
                         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
                             <p className="text-center text-9xl">No users found</p>
                         </div>

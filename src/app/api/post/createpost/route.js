@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const jwtSecret = process.env.JWT_SECRET;
 
-import { createNewPost } from "@/utils/prismautils";
+import { createNewPost } from "@/utils/prisma/utils/posts";
 
 export async function POST(request) {
     try {

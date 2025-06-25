@@ -1,5 +1,5 @@
 "use server";
-import { createUser } from "@/utils/prismautils";
+import { createUser } from "@/utils/prisma/utils/auth";
 import { encrypt } from "@/utils/api/stringencryption";
 
 const re = new RegExp("^[a-zA-Z0-9]+$"); // Ensures that the user will not be created, if they change the html to bypass the pattern

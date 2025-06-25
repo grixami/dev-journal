@@ -1,4 +1,4 @@
-import { getUserPosts } from "@/utils/prismautils";
+import { getUserPosts } from "@/utils/prisma/utils/posts";
 
 export async function GET(request) {
     const { searchParams } = new URL(request.url);

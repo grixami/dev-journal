@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken")
 const jwtSecret = process.env.JWT_SECRET
 
-import { deletePost, getPost } from "@/utils/prismautils"
+import { deletePost, getPost } from "@/utils/prisma/utils/posts"
 
 export async function POST(request) {
     const {token, id} = await request.json()

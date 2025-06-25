@@ -1,7 +1,7 @@
 
 const jwt = require("jsonwebtoken")
 const jwtSecret = process.env.JWT_SECRET
-import { getPost } from "@/utils/prismautils"
+import { getPost } from "@/utils/prisma/utils/posts"
 
 export async function GET(request) {
     const { searchParams } = new URL(request.url)

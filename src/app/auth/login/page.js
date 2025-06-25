@@ -86,7 +86,7 @@ export default function Login() {
                     {submitted ? (
                       <TransparrentLoadingGif className="mx-auto block"/>
                     ) : (
-                      <button type="submit"className="mx-auto block border border-[#f0f6fc] px-4 py-2 rounded-lg hover:bg-[#35383d]">Sign Up</button>
+                      <button type="submit"className="mx-auto block border border-[#f0f6fc] px-4 py-2 rounded-lg hover:bg-[#35383d]">Login</button>
                     )}
                 </form>
             </div>

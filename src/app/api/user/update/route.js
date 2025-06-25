@@ -1,6 +1,6 @@
 "use server";
 
-import {updateUserProfile } from "@/utils/prismautils";
+import { updateUserProfile } from "@/utils/prisma/utils/users";
 const jwt = require("jsonwebtoken")
 const jwtSecret = process.env.JWT_SECRET
 

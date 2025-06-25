@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-import { checkUserAdmin, deleteUser, updatePermissionLevel } from "@/utils/prismautils";
+import { checkUserAdmin, deleteUser, updatePermissionLevel } from "@/utils/prisma/utils/users";
 
 const jwtSecret = process.env.JWT_SECRET;
 

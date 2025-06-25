@@ -1,6 +1,6 @@
 "use server";
 
-import { getUserNoPass } from "@/utils/prismautils";
+import { getUserNoPass } from "@/utils/prisma/utils/users"
 
 export async function GET(request) {
     const { searchParams } = new URL(request.url);

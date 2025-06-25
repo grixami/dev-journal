@@ -1,6 +1,6 @@
 "use server";
 
-import { getUserNoPass } from "@/utils/prismautils";
+import { getUserNoPass } from "@/utils/prisma/utils/users";
 
 const jwt = require("jsonwebtoken")
 const jwtSecret = process.env.JWT_SECRET

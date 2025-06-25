@@ -1,4 +1,4 @@
-import { getPostsWithTitle } from "@/utils/prismautils";
+import { getPostsWithTitle } from "@/utils/prisma/utils/posts"
 
 export async function GET(request) {
     try {

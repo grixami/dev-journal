@@ -1,4 +1,4 @@
-import { getPost } from "@/utils/prismautils";
+import { getPost } from "@/utils/prisma/utils/posts"
 
 export async function GET(request) {
     try {

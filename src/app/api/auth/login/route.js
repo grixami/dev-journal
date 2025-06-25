@@ -1,6 +1,8 @@
 "use server";
 
-import { getUserPassword, usernameToUserID, checkUserAdmin } from "@/utils/prismautils";
+
+import { getUserPassword } from "@/utils/prisma/utils/auth";
+import { checkUserAdmin, usernameToUserID } from "@/utils/prisma/utils/users";
 import { compare } from "@/utils/api/stringencryption"
 
 const jwt = require("jsonwebtoken")

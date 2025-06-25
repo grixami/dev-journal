@@ -2,7 +2,7 @@
 
 const jwt = require("jsonwebtoken")
 import { encrypt } from "@/utils/api/stringencryption";
-import { updateUserPassword } from "@/utils/prismautils";
+import { updateUserPassword } from "@/utils/prisma/utils/auth";
 
 const jwtSecret = process.env.JWT_SECRET;
 

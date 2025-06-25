@@ -1,4 +1,4 @@
-import { getUsersStartsWith } from "@/utils/prismautils";
+import { getUsersStartsWith } from "@/utils/prisma/utils/users"
 
 export async function GET(request) {
     try {
