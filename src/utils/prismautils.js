@@ -276,3 +276,13 @@ export async function updatePost(id, title, desc, content, isPublic) {
     return post
     
 }
+
+export async function deletePost(id) {
+    const post = await prisma.post.delete({
+        where: {
+            id: id
+        }
+    })
+    return post
+    
+}
