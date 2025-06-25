@@ -260,3 +260,19 @@ export async function getPostDrafts(userId) {
 
     return posts
 }
+
+export async function updatePost(id, title, desc, content, isPublic) {
+    const post = await prisma.post.update({
+        where: {
+            id: id
+        },
+        data: {
+            title: title,
+            desc: desc,
+            content: content,
+            isPublic: isPublic
+        }
+    })
+    return post
+    
+}

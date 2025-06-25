@@ -10,16 +10,14 @@ export default function ViewPost({ params }) {
     const [viewPretty, setViewPretty] = useState(true)
     const [loading, setLoading] = useState(true)
 
+    
+
     useEffect(() => {
         const fetchPost = async () => {
             try {
                 const resp = await fetch(`/api/post/getpost?id=${id}`, {
                 method: "GET",
             });
-
-            if (!resp.ok) {
-                throw new Error("Failed to fetch user data");
-            }
 
             const data = await resp.json();
             setPostData(data);

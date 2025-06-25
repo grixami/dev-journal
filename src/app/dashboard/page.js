@@ -73,6 +73,7 @@ return (
                         postTitle={post.title}
                         postDesc={post.desc}
                         postId={post.id}
+                        canedit={true}
                         />
                     ))}
                 </div>

@@ -23,7 +23,7 @@ export async function GET(request) {
 }
 
 export function POST() {
-    return new Response({message: "Method not allowed"}, {
+    return new Response(JSON.stringify({message: "Method not allowed"}), {
         status: 405
     })
 }
