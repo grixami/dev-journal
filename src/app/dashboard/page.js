@@ -7,8 +7,12 @@ import Head from "next/head";
 import LoginNav from "@/components/loginnav";
 import ProfileCard from "@/components/profilecard";
 import ProfilePost from "@/components/profilepost";
+import TransparrentLoadingGif from "@/components/gif/transparrentloadinggif";
+
 export default function Dashboard() {
     const [userData, setUserData] = useState(null);
+    const [postData, setPostData] = useState(null);
+    const [loading, setLoading] = useState(true)
     const router = useRouter();
 
     useEffect(() => {
@@ -17,20 +21,29 @@ export default function Dashboard() {
         const fetchUser = async () => {
 
             try {
-                const resp = await fetch(`/api/user/getself?token=${token}`, {
-                method: "GET",
-                });
+                const userResp = await fetch(`/api/user/getself?token=${token}`);
 
-                if (!resp.ok) {
-                throw new Error("Failed to fetch user data");
+                if (!userResp.ok){
+                     throw new Error("Failed to fetch user data");
                 }
 
-                const data = await resp.json();
-                setUserData(data);
+                const userJson = await userResp.json();
+                setUserData(userJson);
+
+                const postsResp = await fetch(`/api/user/getposts?id=${userJson.id}`);
+
+                if (!postsResp.ok) {
+                     throw new Error("Failed to fetch user posts");
+                }
+
+                const postsJson = await postsResp.json();
+                setPostData(postsJson);
+                setLoading(false)
             } catch (error) {
                 console.error("Error fetching user data:", error);
-                router.replace("/auth/logout");
+                //router.replace("/auth/logout");
             }
+            setLoading(false)
         };
 
         fetchUser();
@@ -45,6 +58,7 @@ return (
         </Head>
         <div>
             <LoginNav/>
+            {!loading ? (
             <div className="flex mt-10">
                 <ProfileCard userData={userData} editProfile={true} />  {/* Shows pfp, username, bio and joinDate */}
                 <div className="flex-grow"></div>
@@ -52,11 +66,21 @@ return (
                     <div className="border-2 border-white rounded-xl px-5 py-5">
                         <h2 className="text-4xl text-center">Posts</h2>
                     </div>
-                    <ProfilePost postTitle="Title 1" postId="1" postDesc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lobortis aliquam mi, eget ornare ex efficitur eu. Integer non erat eget ligula congue pellentesque. Cras nec consequat felis. Sed a ex vel augue elementum egestas a at odio."/>
-                    <ProfilePost postTitle="Title 2" postId="2" postDesc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lobortis aliquam mi, eget ornare ex efficitur eu. Integer non erat eget ligula congue pellentesque. Cras nec consequat felis. Sed a ex vel augue elementum egestas a at odio."/>
-                    <ProfilePost postTitle="Title 3" postId="3" postDesc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi lobortis aliquam mi, eget ornare ex efficitur eu. Integer non erat eget ligula congue pellentesque. Cras nec consequat felis. Sed a ex vel augue elementum egestas a at odio."/>
+                    
+                    {postData.length > 0 && postData.map((post) => (
+                        <ProfilePost
+                        key={post.id}
+                        postTitle={post.title}
+                        postDesc={post.desc}
+                        postId={post.id}
+                        />
+                    ))}
                 </div>
             </div>
+            ) : (
+                <TransparrentLoadingGif width={300} height={300} className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2"/>
+            )}
+            
         </div>
     </>
     );

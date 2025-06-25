@@ -16,7 +16,7 @@ export default function MdDraggableEditor({addToTextArea}) { // addToTextArea is
 
     return (
         <Draggable nodeRef={draggableRef}>
-            <div ref={draggableRef} className="z-10 flex flex-row border-2 space-x-4 absolute top-[40%] right-[40%]  bg-[#010409]/30 backdrop-blur-xs text-white p-4 rounded-2xl shadow-lg cursor-move">
+            <div ref={draggableRef} className="z-10 flex flex-row border-2 space-x-4 absolute top-[10%] right-[25%]  bg-[#010409]/30 backdrop-blur-xs text-white p-4 rounded-2xl shadow-lg cursor-move">
                 <div className="bg-[#35383d] rounded-2xl">
                     <button className="flex flex-row items-center justify-center px-5 py-2 hover:cursor-pointer" onClick={() => changeDropdown("head")}>
                         <p>Heading</p>
@@ -54,8 +54,8 @@ export default function MdDraggableEditor({addToTextArea}) { // addToTextArea is
                     )}
                 </div>
                 <div className="bg-[#35383d] rounded-2xl">
-                    <button className="flex flex-row items-center justify-center px-5 py-2 hover:cursor-pointer" onClick={() => changeDropdown("code")}>
-                        <p>code</p>
+                    <button className="flex flex-row items-center justify-center px-5 py-2 hover:cursor-pointer" onClick={() => changeDropdown("katex")}>
+                        <p>katex</p>
                         <Image
                             className="dark:invert pl-2"
                             alt=""
@@ -64,22 +64,25 @@ export default function MdDraggableEditor({addToTextArea}) { // addToTextArea is
                             height={30}
                         />
                     </button>
-                    { activeDropDown == "code" && (
+                    { activeDropDown == "katex" && (
                         <div className="absolute py-2 space-y-2">
                             <div className="bg-[#35383d] rounded-2xl">
-                                <button className="px-5 py-2" onClick={() => addToTextArea("`code`")}>codeline</button>
+                                <button className="px-5 py-2" onClick={() => addToTextArea("$math$")}>single line</button>
                             </div>
                             <div className="bg-[#35383d] rounded-2xl">
-                                <button className="px-5 py-2" onClick={() => addToTextArea("```\ncode\n```")}>codeblock</button>
+                                <button className="px-5 py-2" onClick={() => addToTextArea("$$\nmath\n$$")}>multi line</button>
                             </div>
                         </div>
 
                     )}
                 </div>
-                
+                <div className="bg-[#35383d] rounded-2xl">
+                    <button className="px-5 py-2" onClick={() => addToTextArea("```lang\n[code]\n```")}>codeblock</button>
+                </div>                
                 <div className="bg-[#35383d] rounded-2xl">
                     <button className="px-5 py-2" onClick={() => addToTextArea("[name](link)")}>link</button>
                 </div>
+
                 <div className="bg-[#35383d] rounded-2xl">
                     <button className="px-5 py-2" onClick={() => addToTextArea("![alt](image-link)")}>image</button>
                 </div>

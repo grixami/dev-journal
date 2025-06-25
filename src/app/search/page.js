@@ -6,9 +6,12 @@ import SearchUserProfile from "@/components/searchuserprofile"
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import TransparrentLoadingGif from "@/components/gif/transparrentloadinggif";
+import SearchPost from "@/components/searchpost";
 
 function Search() {
     const [userData, setUserData] = useState(null);
+    const [postData, setPostData] = useState(null);
+    const [display, setDisplay] = useState("posts")
     const [isLoading, setIsLoading] = useState(true);
     const [noQuery, setNoQuery] = useState(false)
     const searchParams = useSearchParams()
@@ -24,8 +27,15 @@ function Search() {
             .then(resp => resp.json())
             .then(data => {
                 setUserData(data)
+            })
+
+        fetch(`/api/post/getpostswithstart?title=${query}`)
+            .then(resp => resp.json())
+            .then(data => {
+                setPostData(data)
                 setIsLoading(false)
             })
+        
         
     }, [query])
 
@@ -38,15 +48,68 @@ function Search() {
             </Head>
             <div className="flex flex-col h-screen">
                 <LoginNav/>
+                {isLoading == false && (
+                <div className="flex items-center justify-center mt-10 space-x-5">
+                    <div className="relative transition-transform duration-300 ease-in-out hover:scale-105 group">
+                        <div className="absolute inset-0 opacity-0 rounded-3xl blur group-hover:opacity-100 group-hover:bg-amber-50">
+
+                        </div>
+
+                        <button className="relative bg-[#010409] rounded-3xl px-15 py-2 border-2 group-hover:cursor-pointer"
+                        onClick={() => {setDisplay("users")}}
+                        >
+                            <p className="text-xl">Users</p>
+                        </button>
+                    </div>
+                    <div className="relative transition-transform duration-300 ease-in-out hover:scale-105 group">
+                        <div className="absolute inset-0 opacity-0 rounded-3xl blur group-hover:opacity-100 group-hover:bg-amber-50">
+
+                        </div>
+
+                        <button className="relative bg-[#010409] rounded-3xl px-15 py-2 border-2 group-hover:cursor-pointer"
+                        onClick={() => {setDisplay("posts")}}
+                        >
+                            <p className="text-xl">Posts</p>
+                        </button>
+                    </div>
+                </div>
+                )}
+                
                 <div className="flex overflow-y-auto scrollbar scrollbar-thumb-white">
                     <div className="flex flex-col space-y-5 mt-10 w-3/5 ml-[10%]">
-                        {userData != null && userData.map((user) => (
-                            <SearchUserProfile key={user.id} userId={user.id} username={user.username} bio={user.bio} pfp={user.profilepic}/>
-                        ))}
+                    {display === "users" && userData && userData.map(user => (
+                        <SearchUserProfile
+                            key={user.id}
+                            userId={user.id}
+                            username={user.username}
+                            bio={user.bio}
+                            pfp={user.profilepic}
+                        />
+                        ))
+                    }
+                    {display === "posts" && postData && postData.map(post => (
+                            <SearchPost key={post.id} postTitle={post.title} postDesc={post.desc} postId={post.id}/>
+                        ))
+                        
+                    }
+                    {display === "posts" && postData && postData.length == 0 && (
+                        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                            <p className="text-center text-9xl">No posts found</p>
+                        </div>
+                    )}
+                    {display === "users" && postData && postData.length == 0 && (
+                        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                            <p className="text-center text-9xl">No users found</p>
+                        </div>
+                    )}
+
+
+
+
                     </div>
 
                 </div>
-                {isLoading == false && userData == null && noQuery == false && (
+                {isLoading == false && userData == null && noQuery == false && postData == null && (
                     <div className="h-[30vh] flex items-center justify-center ">
                         <div className="flex items-center justify-center bg-[#35383d] p-10 rounded-4xl w-[50%]">
                             <p className="text-7xl break-words whitespace-normal max-w-full">No Results found for &quot;{query}&quot;</p>

@@ -13,6 +13,18 @@ export async function POST(request) {
             })  
         }
 
+        if(content.length > 10000) {
+            return new Response(JSON.stringify({message: "Post longer than 10,000 characters, please shorten it"}), {
+                status: 400
+            })  
+        }
+
+        if(desc.length > 256) {
+            return new Response(JSON.stringify({message: "Post longer than 256 characters, please shorten it"}), {
+                status: 400
+            })  
+        }
+
 
         const decoded = jwt.verify(token, jwtSecret);
         const userId = decoded.userId;

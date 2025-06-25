@@ -139,7 +139,8 @@ export async function getUsersStartsWith(usernameStart, pfp) { // for searching
             bio: true,
             id: true,
             profilepic: pfp
-        }
+        },
+        take: 50
     })  
 
     if(users.length == 0) {
@@ -181,7 +182,7 @@ export async function updatePermissionLevel(id, permissionlevel) {
         throw Error("User does not exist")
     }
 
-    const newUser = prisma.user.update({
+    const newUser = await prisma.user.update({
         where: { id: id },
         data: {
             permissionlevel: permissionlevel
@@ -193,7 +194,7 @@ export async function updatePermissionLevel(id, permissionlevel) {
 
 
 export async function createNewPost(creator, title, desc, content, isPublic) {
-    const newPost = prisma.post.create({
+    const newPost = await prisma.post.create({
         data: {
             title: title,
             desc: desc,
@@ -205,4 +206,46 @@ export async function createNewPost(creator, title, desc, content, isPublic) {
 
     return newPost
     
+}
+
+export async function getPost(postId) {
+    const post = await prisma.post.findFirst({
+        where: {
+            id: postId
+        },
+        include: {
+            author: {
+                select: {
+                    username: true
+                }
+            }
+        }
+    })
+    return post
+}
+
+export async function getUserPosts(userId, includeDrafts) {
+    const posts = await prisma.post.findMany({
+        where: {
+            authorId: userId,
+            draft: includeDrafts,
+            isPublic: 1
+        }
+    })
+
+    return posts
+}
+
+export async function getPostsWithTitle(title) {
+    const posts = await prisma.post.findMany({
+        where: {
+            title: {
+                contains: title
+            },
+            isPublic: 1
+        },
+        take: 20
+    })
+
+    return posts
 }
