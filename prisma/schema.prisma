@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      =  env("DATABASE_URL")
 }
 
 model User {
@@ -24,9 +24,11 @@ model User {
 model Post {
   id                Int         @id @default(autoincrement())
   title             String
+  desc              String
   content           String               // will be b64 encoded md file
   createdAt         DateTime    @default(now())
   updatedAt         DateTime    @updatedAt
+  isPublic          Int
 
   author    User     @relation("UserPosts", fields: [authorId], references: [id])
   authorId  Int

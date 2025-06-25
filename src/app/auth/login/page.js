@@ -42,6 +42,9 @@ export default function Login() {
             setIsError(true);
             setErrorMessage(data.message);
             setSubmitted(false)
+              if(resp.status == 429) {
+                setErrorMsg("You have been rate-limited, try again later")
+            }
             return;
           }
           

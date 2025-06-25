@@ -47,7 +47,11 @@ export default function Signup() {
           } else {
             const data = await resp.json()
             setIsRegistrationFailed(true)
+            
             setFailMessage(data.message)
+            if(resp.status == 429) {
+                setErrorMsg("You have been rate-limited, try again later")
+            }
           }
         } catch(error) {
           console.error('Error during signup:', error);

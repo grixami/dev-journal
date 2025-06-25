@@ -190,3 +190,19 @@ export async function updatePermissionLevel(id, permissionlevel) {
 
     return newUser
 }
+
+
+export async function createNewPost(creator, title, desc, content, isPublic) {
+    const newPost = prisma.post.create({
+        data: {
+            title: title,
+            desc: desc,
+            content: content,
+            isPublic: isPublic,
+            authorId: creator
+        }
+    })
+
+    return newPost
+    
+}
