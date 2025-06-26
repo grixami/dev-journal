@@ -79,6 +79,14 @@ export default function CreatePost() {
 
     let postSubmit = async () => {
         setLoading(true)
+
+
+        if(tag == null) { setErrorBox(true); setErrorMsg("please add a tag"); setLoading(false); return}
+        if(postTitle == "") { setErrorBox(true); setErrorMsg("please add a title"); setLoading(false); return}
+        if(postDesc == "") { setErrorBox(true); setErrorMsg("please add a description"); setLoading(false); return}
+        if(editorText == "") { setErrorBox(true); setErrorMsg("please add content"); setLoading(false); return}
+        if(postType == null) { setErrorBox(true); setErrorMsg("please choose if it is a draft or to publish it"); setLoading(false); return}
+        
         const resp = await fetch("/api/post/createpost", {
             method: "POST",
             headers: {
@@ -89,7 +97,8 @@ export default function CreatePost() {
                 title: postTitle,
                 desc: postDesc,
                 content: editorText,
-                postType: postType
+                postType: postType,
+                tag: tag
 
             })
         })

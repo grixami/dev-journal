@@ -1,13 +1,14 @@
 import prisma from "@/utils/prisma/client"
 
-export async function createNewPost(creator, title, desc, content, isPublic) {
+export async function createNewPost(creator, title, desc, content, isPublic, tag) {
     const newPost = await prisma.post.create({
         data: {
             title: title,
             desc: desc,
             content: content,
             isPublic: isPublic,
-            authorId: creator
+            authorId: creator,
+            postTag: tag
         }
     })
 

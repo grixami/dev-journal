@@ -3,11 +3,13 @@ const jwtSecret = process.env.JWT_SECRET;
 
 import { getPost, updatePost } from "@/utils/prisma/utils/posts"
 
+const tags = ["Other", "Robotics", "Cybersecurity", "Software Development"]
+
 export async function POST(request) {
     try {
 
-        const {content, desc, id, postType, title, token } = await request.json();
-        if(id, !token || !title || !desc || !content || !postType) {
+        const {content, desc, id, postType, title, token, tag } = await request.json();
+        if(!id || !token || !title || !desc || !content || !postType || !tag) {
             return new Response(JSON.stringify({message: "Please fill in all fields"}), {
                 status: 400
             })  
@@ -25,6 +27,11 @@ export async function POST(request) {
             })  
         }
 
+        if(!(tags.includes(tag))) {
+            return new Response(JSON.stringify({message: "invalid tag"}), {
+                status: 400
+            })  
+        }
 
         const decoded = jwt.verify(token, jwtSecret);
         const userId = decoded.userId;
@@ -38,7 +45,7 @@ export async function POST(request) {
                 status: 403
             })
         }
-        const newPost = await updatePost(parseInt(id), title, descBase64, contentBase64, parseInt(postType))
+        const newPost = await updatePost(parseInt(id), title, descBase64, contentBase64, parseInt(postType), tag)
         
         return new Response({message: "sucess"}, {
             status: 200

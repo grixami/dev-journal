@@ -30,6 +30,10 @@ export default function EditPost({ params }) {
     const [errorBox, setErrorBox] = useState(false)
     const [errorMsg, setErrorMsg] = useState("")
 
+    
+    const [tagDropDown, setTagDropDown] = useState(false)
+    const [tag, setTag] = useState(null)
+
     useEffect(() => {
         const getPost = async () => {
             const resp = await fetch(`/api/post/editpost?id=${id}&token=${getCookie("auth_token")}`, {
@@ -44,6 +48,8 @@ export default function EditPost({ params }) {
             title.value = data.title
             setPostTitle(data.title)
 
+            setTag(data.postTag)
+
             const desc = document.getElementById("description")
             desc.value = Buffer.from(data.desc, 'base64').toString()
             setPostDesc(Buffer.from(data.desc, 'base64').toString())
@@ -53,7 +59,7 @@ export default function EditPost({ params }) {
             setEditorText(Buffer.from(data.content, 'base64').toString())
         }
         getPost()
-    }, [id])
+    }, [router, id])
     const addToTextArea = function (text_to_add) { // from https://codepen.io/Fantantonio/pen/oNdreeB
         let textarea = document.getElementById("my-editor");
         let start_position = textarea.selectionStart;
@@ -84,6 +90,12 @@ export default function EditPost({ params }) {
 
     let postSubmit = async () => {
         setLoading(true)
+        if(tag == null) { setErrorBox(true); setErrorMsg("please add a tag"); setLoading(false); return}
+        if(postTitle == "") { setErrorBox(true); setErrorMsg("please add a title"); setLoading(false); return}
+        if(postDesc == "") { setErrorBox(true); setErrorMsg("please add a description"); setLoading(false); return}
+        if(editorText == "") { setErrorBox(true); setErrorMsg("please add content"); setLoading(false); return}
+        if(postType == null) { setErrorBox(true); setErrorMsg("please choose if it is a draft or to publish it"); setLoading(false); return}
+
         const resp = await fetch("/api/post/save", {
             method: "POST",
             headers: {
@@ -95,7 +107,8 @@ export default function EditPost({ params }) {
                 desc: postDesc,
                 content: editorText,
                 postType: postType,
-                id: id
+                id: id,
+                tag: tag
 
             })
         })
@@ -113,7 +126,9 @@ export default function EditPost({ params }) {
         setLoading(false)
         router.replace("/dashboard")
     }
-
+    const toggleTagDropdown = function() {
+        setTagDropDown(!tagDropDown)
+    }
 
     return(
         <>
@@ -180,6 +195,53 @@ export default function EditPost({ params }) {
                                         <label htmlFor="draft" className="hover:cursor-pointer border-2 border-white p-3 rounded-3xl bg-[#010409] peer-checked/draft:bg-red-600 peer-checked/draft:scale-110 transition-transform duration-600">
                                             Draft
                                         </label>       
+                                    </div>
+                                    <div className="flex flex-col items-center justify-center mt-4 w-full">
+                                        <div className="flex flex-row items-center justify-center space-x-3 border-2 p-2 rounded-4xl">
+                                        <button className="bg-cyan-600 p-2 rounded-3xl border-2 hover:cursor-pointer"
+                                        onClick={() => toggleTagDropdown()}>
+                                            <div className="flex">
+                                                <p>Tags</p>
+                                                <Image
+                                                    className="dark:invert pl-2"
+                                                    alt=""
+                                                    src="/assets/img/downarrow.png"
+                                                    width={30}
+                                                    height={30}
+                                                />
+                                            </div>
+
+                                        </button>
+                                        {tag && (
+                                            <div className="bg-red-600 p-2 border-1 rounded-4xl">
+                                                <p className="text-xs">{tag}</p>
+                                            </div>
+                                        )}
+                                        </div>
+                                        {tagDropDown && (
+                                            <div className="flex flex-col space-y-2 my-2">
+                                                <div className="bg-cyan-950 border-2 rounded-xl" onClick={() => {setTag("Other"); toggleTagDropdown()}}>
+                                                    <button className="p-1">
+                                                        <p>Other</p>
+                                                    </button>
+                                                </div>
+                                                <div className="bg-cyan-950 border-2 rounded-xl" onClick={() => {setTag("Cybersecurity"); toggleTagDropdown()}}>
+                                                    <button className="p-1 ">
+                                                        <p>Cybersecurity</p>
+                                                    </button>
+                                                </div>
+                                                <div className="bg-cyan-950 border-2 rounded-xl" onClick={() => {setTag("Software Development"); toggleTagDropdown()}}>
+                                                    <button className="p-1 ">
+                                                        <p>Software Development</p>
+                                                    </button>
+                                                </div>
+                                                <div className="bg-cyan-950 border-2 rounded-xl" onClick={() => {setTag("Robotics"); toggleTagDropdown()}}>
+                                                    <button className="p-1 ">
+                                                        <p>Robotics</p>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
                                     <hr className="border-t-2 mt-4"></hr>
                                     <div className="flex items-center justify-center mt-4">
