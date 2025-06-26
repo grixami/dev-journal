@@ -18,6 +18,7 @@ model User {
   permissionlevel   Int         @default(0)                     // 0 for user, 1 for mod, 2 for admin
 
   posts     Post[]   @relation("UserPosts")
+  comments Comment[]
 }
 
 model Post {
@@ -26,12 +27,24 @@ model Post {
   desc              String
   content           String               // will be b64 encoded md file
   createdAt         DateTime    @default(now())
-  updatedAt         DateTime    @updatedAt
   isPublic          Int
-  postTag          String      @default("")
+  postTag           String      @default("")
+  views             Int         @default(0)
 
-  author    User     @relation("UserPosts", fields: [authorId], references: [id])
+  author    User        @relation("UserPosts", fields: [authorId], references: [id])
   authorId  Int
+    
+  comments Comment[]
 }
 
-// TODO, comments, follows, messages
+model Comment {
+  id            Int         @id @default(autoincrement())
+  content       String
+  createdAt     DateTime    @default(now())
+  
+  author        User        @relation(fields: [authorId], references: [id])
+  authorId      Int
+
+  post          Post        @relation(fields: [postId], references: [id])
+  postId        Int
+}

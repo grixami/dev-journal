@@ -1,4 +1,4 @@
-import { getPost } from "@/utils/prisma/utils/posts"
+import { getPost, incrementPostViews } from "@/utils/prisma/utils/posts"
 
 export async function GET(request) {
     try {
@@ -10,6 +10,9 @@ export async function GET(request) {
             return new Response({message: "Post is a draft, not public"}, {
                 status: 404
             })
+        }
+        if(searchParams.get("view")) {
+            incrementPostViews(id)
         }
         return new Response(JSON.stringify(post), {
             status: 200,

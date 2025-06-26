@@ -3,24 +3,42 @@
 import { use, useEffect, useState } from "react"
 import RenderMarkdown from "@/components/md/mdrender";
 import LoginNav from "@/components/loginnav";
+import { getCookie } from "@/utils/cookies";
+import Comment from "@/components/comment/comment";
+import TransparrentLoadingGif from "@/components/gif/transparrentloadinggif";
+import Image from "next/image";
 
 export default function ViewPost({ params }) {
     const { id } = use(params)
     const [postData, setPostData] = useState(null)
     const [viewPretty, setViewPretty] = useState(true)
     const [loading, setLoading] = useState(true)
+    const [commentData, setCommentData] = useState(null)
+    const [commentSending, setCommentSending] = useState(false)
 
+    const [commentResponse, setCommentResponse] = useState(null)
     
+    let currentLocation = window.location
 
     useEffect(() => {
         const fetchPost = async () => {
             try {
-                const resp = await fetch(`/api/post/getpost?id=${id}`, {
-                method: "GET",
-            });
+                const postDataResp = await fetch(`/api/post/getpost?id=${id}&view=1`, {
+                    method: "GET",
+                });
 
-            const data = await resp.json();
-            setPostData(data);
+                const postData = await postDataResp.json();
+                setPostData(postData);
+
+                const commentDataResp = await fetch(`/api/comment/getcomments?id=${id}`, {
+                    method: "GET",
+                });
+
+                const commentData = await commentDataResp.json();
+                setCommentData(commentData.comments);
+
+
+
       } catch (error) {
         
       }
@@ -29,12 +47,68 @@ export default function ViewPost({ params }) {
         fetchPost()
     }, [id])
 
+    const copyUrl = () => {
+        navigator.clipboard.writeText(currentLocation)
+        const popup = document.getElementById("copyurlpopup")
+        popup.hidden = false
+        setTimeout(() => {
+            popup.hidden = true
+        }, 2500)
+    }
+
+
+    const postComment = async () => {
+        setCommentSending(true)
+        const commentBox = document.getElementById("commentbox")
+
+        const resp = await fetch("/api/comment/postcomment", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                token: getCookie("auth_token"),
+                content: commentBox.value,
+                postId: id
+            })
+        })
+
+        const data = await resp.json()
+        
+        if(resp.status == 200) {
+            setCommentResponse(data.message)
+        }
+        if(resp.status != 200) {
+            if(resp.status == 429) {
+                setCommentResponse("You are being ratelimited")
+            }
+        }
+        
+
+        setCommentSending(false)
+    }
+
     return (
         <>
         <LoginNav/>
             {postData ? (
             <div>
+                <div id="copyurlpopup" hidden>
+                    <div className="absolute left-1/2 top-1/10 bg-green-500 p-2 rounded-3xl border-2 ">
+                        <p className="text-xl">Copied Url</p>
+                    </div>
+                </div>
                 <div className=" w-3/5 my-[3%] ml-[3%] rounded-3xl inline-block border-3 p-5">
+                    <div className="flex justify-end items-end">
+                        <Image
+                        className="dark:invert hover:cursor-pointer"
+                        src="/assets/img/share.png"
+                        alt=""
+                        width={50}
+                        height={50}
+                        onClick={() => copyUrl()}
+                        />
+                    </div>
                     <div className="flex flex-row justify-center items-start space-x-3">
                         <a href={`/user/${postData?.authorId}/profile`} className="p-2">
                             <p className="text-2xl text-blue-800 mb-4">By: {postData?.author.username}</p>
@@ -53,7 +127,21 @@ export default function ViewPost({ params }) {
 
 
                     </div>
-                    <h1 className="text-7xl break-words font-bold mb-4">{postData?.title}</h1>
+                    <div className="flex items-center justify-center space-x-5">
+                        <h1 className="text-7xl break-words font-bold mb-4">{postData?.title}</h1>
+                        <div className="border-2 rounded-4xl">
+                            <div className="flex items-center justify-center p-2">
+                                <Image
+                                className="dark:invert"
+                                src="/assets/img/eyeicon.png"
+                                alt=""
+                                width={50}
+                                height={50}
+                                />
+                                <p className="ml-3">{postData?.views}</p>
+                            </div>
+                        </div>
+                    </div>
                     <p className="text-xl break-words">{Buffer.from(postData.desc, 'base64').toString()}</p>
                 </div>
 
@@ -66,6 +154,42 @@ export default function ViewPost({ params }) {
 
                     
                 </div>
+
+                <hr className="border-2"></hr>
+
+                <div className="mt-10 pl-10">
+                    <div className="flex flex-col">
+                        <div className="flex justify-start">
+                            <div className="flex flex-col space-y-3">
+                                <textarea id="commentbox" className="p-2 rounded-2xl resize-none border-2 w-[200%] h-30 focus:border-[#5a9ef9] focus:outline-none" maxLength={100}>
+
+                                </textarea>
+                                {commentSending ? (
+                                    <TransparrentLoadingGif/>
+                                ) : (
+                                <button className="bg-black p-2 rounded-3xl border-2 transition-transform duration-300 hover:scale-105 hover:cursor-pointer"
+                                onClick={() => postComment()}>
+                                    <p>add comment</p>
+                                </button>
+                                )}
+
+                            </div>
+                            
+                        </div>
+                        {commentResponse && (
+                        <div id="commentrespbox" className={`inline-flex max-w-lg ${commentResponse == "sucess" ? ("bg-green-500") : ("bg-red-500")} p-2 rounded-2xl mt-2`}>
+                            <h2 className="text-3xl">{commentResponse == "sucess" ? ("") : ("Error: ")} {commentResponse}</h2>
+                        </div>
+                        )}
+
+                        <div className="pt-10 flex flex-col space-y-7">
+                        {commentData && commentData.map(comment => (
+                            <Comment key={comment.id} comment={comment}/>
+                        ))}
+                        </div>
+                    </div>
+                </div>
+                
             </div>
             ) : (
 

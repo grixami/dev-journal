@@ -69,7 +69,7 @@ export async function getPostDrafts(userId) {
     return posts
 }
 
-export async function updatePost(id, title, desc, content, isPublic) {
+export async function updatePost(id, title, desc, content, isPublic, tag) {
     const post = await prisma.post.update({
         where: {
             id: id
@@ -78,7 +78,8 @@ export async function updatePost(id, title, desc, content, isPublic) {
             title: title,
             desc: desc,
             content: content,
-            isPublic: isPublic
+            isPublic: isPublic,
+            postTag: tag
         }
     })
     return post
@@ -92,5 +93,21 @@ export async function deletePost(id) {
         }
     })
     return post
+    
+}
+
+export async function incrementPostViews(postId) {
+    const updatedPost = await prisma.post.update({
+        where: {
+            id: postId
+        },
+        data: {
+            views: {
+                increment: 1
+            }
+        }
+    })
+
+    return updatePost
     
 }
