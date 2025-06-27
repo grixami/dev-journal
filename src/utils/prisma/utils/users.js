@@ -10,7 +10,13 @@ export async function getUserNoPass(id) {
             bio: true,
             profilepic: true,
             createdAt: true,
-            permissionlevel: true
+            permissionlevel: true,
+            _count: {
+                select: {
+                    followers: true,
+                    following: true
+                }
+            }
         }
     });
 

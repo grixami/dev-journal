@@ -7,12 +7,14 @@ import Head from 'next/head';
 import { use, React } from 'react';
 import { useState, useEffect } from 'react';
 import TransparrentLoadingGif from '@/components/gif/transparrentloadinggif';
+import { cookieExists, getCookie } from '@/utils/cookies';
 
 export default function Page({ params }) {
   const { id } = use(params)
   const [userData, setUserData] = useState(null);
   const [postData, setPostData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isFollowing, setIsFollowing] = useState(false)
 
     useEffect(() => {
       const fetchUser = async () => {
@@ -34,6 +36,17 @@ export default function Page({ params }) {
 
           const postsJson = await postsResp.json();
           setPostData(postsJson);
+
+          if(cookieExists("auth_token")) {
+            
+              const followingResp = await fetch(`/api/follow/isfollowing?token=${getCookie("auth_token")}&userId=${userJson.id}`)
+              const followingJson = await followingResp.json();
+
+              setIsFollowing(followingJson.isFollowing)
+              
+          }
+
+          
       } catch (error) {
         
       }
@@ -56,7 +69,7 @@ export default function Page({ params }) {
         <div>
           {userData != null ? (
           <div className="flex mt-10">
-          <ProfileCard userData={userData} editProfile={false} />  {/* Shows pfp, username, bio and joinDate */}
+          <ProfileCard userData={userData} editProfile={false} isFollowing={isFollowing} />  {/* Shows pfp, username, bio and joinDate */}
           <div className="flex-grow"></div>
           <div className="w-1/2 mr-10">
               <div className="border-2 border-white rounded-xl px-5 py-5">

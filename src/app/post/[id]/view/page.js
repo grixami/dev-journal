@@ -17,10 +17,11 @@ export default function ViewPost({ params }) {
     const [commentSending, setCommentSending] = useState(false)
 
     const [commentResponse, setCommentResponse] = useState(null)
+    let currentLocation
     
-    let currentLocation = window.location
 
     useEffect(() => {
+        currentLocation = window.location
         const fetchPost = async () => {
             try {
                 const postDataResp = await fetch(`/api/post/getpost?id=${id}&view=1`, {

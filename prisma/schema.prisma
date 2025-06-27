@@ -19,6 +19,9 @@ model User {
 
   posts     Post[]   @relation("UserPosts")
   comments Comment[]
+
+  followers Follow[]  @relation("userFollowers")
+  following Follow[]  @relation("userFollowing")
 }
 
 model Post {
@@ -47,4 +50,16 @@ model Comment {
 
   post          Post        @relation(fields: [postId], references: [id])
   postId        Int
+}
+
+model Follow {
+  id            Int         @id @default(autoincrement())
+
+  follower      User        @relation("userFollowing", fields: [followerId], references: [id])
+  followerId    Int
+
+  following     User        @relation("userFollowers", fields: [followingId], references: [id])
+  followingId   Int
+
+  @@unique([followerId, followingId])
 }

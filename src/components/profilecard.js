@@ -1,6 +1,54 @@
-import Image from "next/image"
+"use client";
 
-export default function ProfileCard({userData, editProfile}) {
+import Image from "next/image"
+import { getCookie } from "@/utils/cookies"
+import { useState } from "react";
+import TransparrentLoadingGif from "./gif/transparrentloadinggif";
+
+export default function ProfileCard({userData, editProfile, isFollowing}) {
+
+    const [isFollowingState, setIsFollowingState] = useState(isFollowing);
+    const [loading, setLoading] = useState(false)
+
+    const follow = async () => {
+        setLoading(true)
+
+        const resp = await fetch("/api/follow/followuser", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                token: getCookie("auth_token"),
+                userId: userData.id
+            })
+        })
+
+        setLoading(false)
+        if(resp.status == 200) {
+            setIsFollowingState(true)
+        }
+    }
+
+    const unfollow = async () => {
+        setLoading(true)
+
+        const  resp = await fetch("/api/follow/unfollowuser", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                token: getCookie("auth_token"),
+                userId: userData.id
+            })
+        })
+
+        if(resp.status == 200) {
+            setIsFollowingState(false)
+        }
+        setLoading(false)
+    }
 
     return(
     <div className="w-1/3 ml-10">
@@ -35,16 +83,58 @@ export default function ProfileCard({userData, editProfile}) {
                     className="bg-[#3d444d] px-10 py-2 rounded-xl border hover:bg-[#2c3036]"
                     >Edit Profile</a>
                 </div>
-                <div className="mt-4 ml-5"> {/* Button for if a user can edit their profile (only on /dashboard) */}
+                <div className="mt-4 ml-5"> {/* Button for if a user can see drafts (only on /dashboard) */}
                     <a href="/dashboard/drafts"
                     className="bg-[#3d444d] px-10 py-2 rounded-xl border hover:bg-[#2c3036]"
                     >Drafts</a>
                 </div>
             </div>
         ) : (
-            <></>
+            <>
+            {!loading ? (
+                <>
+                {isFollowingState ? (
+                <div className="flex">
+                    <div className="mt-4 ml-10">
+                        <div className="bg-[#3d444d] px-10 py-2 rounded-xl border hover:bg-[#2c3036] hover:cursor-pointer"
+                        onClick={() => unfollow()}>
+                            <p>Unfollow</p>
+                        </div>
+                    </div>
+                </div>
+                ) : (
+                <div className="flex">
+                    <div className="mt-4 ml-10">
+                        <div className="bg-[#3d444d] px-10 py-2 rounded-xl border hover:bg-[#2c3036] hover:cursor-pointer"
+                        onClick={() => follow()}>
+                            <p>Follow</p>
+                        </div>
+                    </div>
+                </div>
+                )}
+                </>
+            ) : (
+                <>
+                <TransparrentLoadingGif width={100} height={100}/>
+                </>
+            )}
+            
+            </>
         )}
+        <div className="ml-10 flex space-x-4 my-4 ">
 
+            <a href={`/user/${userData.id}/following`}>
+                <div className="bg-black p-2 border-2 rounded-2xl transition-transform duration-300 hover:scale-110">
+                    <p>Followers - {userData._count.followers}</p>
+                </div>
+            </a>
+            
+            <a href={`/user/${userData.id}/following`}>
+                <div className="bg-black p-2 border-2 rounded-2xl transition-transform duration-300 hover:scale-110">
+                    <p>Following - {userData._count.following}</p>
+                </div>
+            </a>
+        </div>
         </div>
     </div>
     )

@@ -28,7 +28,7 @@ export async function middleware(request: NextRequest) {
             const tokenCookie = request.cookies.get("auth_token");
             const token = tokenCookie?.value;
             if (token == null) {
-                return NextResponse.redirect(new URL("/", request.url))
+                return NextResponse.redirect(new URL("/loign", request.url))
             }
 
             return NextResponse.next()
@@ -43,6 +43,8 @@ export async function middleware(request: NextRequest) {
 export const config = {
     matcher: [
     "/admin/:path*",
-    "/dashboard/:path*"
+    "/dashboard/:path*",
+    "/post/:path*",
+    "/user/:path*"
     ]
 }
