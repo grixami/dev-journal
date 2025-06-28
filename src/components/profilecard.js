@@ -123,7 +123,7 @@ export default function ProfileCard({userData, editProfile, isFollowing}) {
         )}
         <div className="ml-10 flex space-x-4 my-4 ">
 
-            <a href={`/user/${userData.id}/following`}>
+            <a href={`/user/${userData.id}/followers`}>
                 <div className="bg-black p-2 border-2 rounded-2xl transition-transform duration-300 hover:scale-110">
                     <p>Followers - {userData._count.followers}</p>
                 </div>

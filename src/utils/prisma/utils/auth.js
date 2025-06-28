@@ -1,6 +1,6 @@
 import prisma from "@/utils/prisma/client"
 
-export async function createUser(username, password) {
+export async function createUser(username, password, email) {
     const existingUser = await prisma.user.findUnique({
         where: { username: username }
     });
@@ -14,10 +14,11 @@ export async function createUser(username, password) {
             //permissionlevel: 2,
             username: username,
             password: password,
+            email: email
         }
     });
 
-    //console.log(newUser)
+    return newUser
 }
 
 
@@ -59,4 +60,69 @@ export async function updateUserPassword(id, password) {
     })
 
     return newUser
+}
+
+export async function createAuth(email, code) {
+    
+    const auth = await prisma.authcode.upsert({
+        where: {email: email},
+        create: {
+            email: email,
+            code: code
+        },
+        update: { code: code }
+    })
+    return auth
+}
+
+export async function createResetLink(email, code) {
+    const resetLink = await prisma.resetcode.upsert({
+        where: {email: email},
+        create: {
+            email: email,
+            code: code
+        },
+        update: { code: code}
+    })
+    return resetLink
+}
+
+export async function getAuthCode(email) {
+
+    const code = await prisma.authcode.findUnique({
+        where: { email: email },
+        select: {
+            code: true
+        }
+    })
+
+    return code?.code // returns only the code as an str
+    
+}
+
+export async function getResetLink(email) {
+    const resetLink = await prisma.authcode.findUnique({
+        where: { email: email},
+        select: {
+            code: true
+        }
+    })
+
+    return resetLink?.code
+}
+
+export async function getResetEmail(code) {
+    
+    const resetcode = await prisma.resetcode.findFirst({
+        where: { code: code}
+    })
+    return resetcode?.email
+}
+
+export async function checkResetCode(code) {
+    const resetcode = await prisma.resetcode.findFirst({
+        where: { code: code }
+    })
+    
+    return !!resetcode
 }

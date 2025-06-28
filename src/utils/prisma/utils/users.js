@@ -1,4 +1,5 @@
 import prisma from "@/utils/prisma/client"
+import { use } from "react";
 
 export async function getUserNoPass(id) {
     const user = await prisma.user.findFirst({
@@ -11,6 +12,7 @@ export async function getUserNoPass(id) {
             profilepic: true,
             createdAt: true,
             permissionlevel: true,
+            email: false,
             _count: {
                 select: {
                     followers: true,
@@ -132,4 +134,23 @@ export async function updatePermissionLevel(id, permissionlevel) {
     })
 
     return newUser
+}
+
+export async function checkUserEmail(email) {
+    const existingUser = await prisma.user.findUnique({
+        where: {email: email}
+    })
+
+
+    return !!existingUser
+    
+}
+
+export async function getUserByEmail(email) {
+    const user = await prisma.user.findUnique({
+        where: {email: email}
+    })
+
+    return user
+    
 }

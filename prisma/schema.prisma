@@ -10,18 +10,32 @@ datasource db {
 
 model User {
   id                Int         @id @default(autoincrement())
+  email             String      @unique
   username          String      @unique
   password          String
   bio               String?     
   profilepic        String?      // will always be 128x128 b64 encoded
   createdAt         DateTime    @default(now())
   permissionlevel   Int         @default(0)                     // 0 for user, 1 for mod, 2 for admin
+  
 
   posts     Post[]   @relation("UserPosts")
   comments Comment[]
 
   followers Follow[]  @relation("userFollowers")
   following Follow[]  @relation("userFollowing")
+}
+
+model Authcode {
+  id                Int       @id @default(autoincrement())
+  email             String    @unique
+  code              String
+}
+
+model Resetcode {
+  id                Int         @id @default(autoincrement())
+  code              String
+  email             String      @unique
 }
 
 model Post {

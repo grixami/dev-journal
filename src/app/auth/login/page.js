@@ -16,7 +16,6 @@ export default function Login() {
       if(cookieExists("auth_token")) {
           router.replace("/");
       }
-
     }, [router]);
 
     const handleSubmit = async (e) => {
@@ -89,6 +88,9 @@ export default function Login() {
                       <button type="submit"className="mx-auto block border border-[#f0f6fc] px-4 py-2 rounded-lg hover:bg-[#35383d]">Login</button>
                     )}
                 </form>
+            </div>
+            <div className="mt-2">
+              <a href="/auth/resetpassword" className="hover:cursor-pointer">Forgotten Password</a>
             </div>
             {isError && (
             <div className="bg-red-600 rounded-xl px-3 py-3 border">
