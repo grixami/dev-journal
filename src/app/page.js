@@ -85,7 +85,7 @@ export default function Home() {
       <div>
         <div className="flex flex-col justify-center items-center py-20">
           <div className="flex items-center">
-            <h1 className="text-6xl mb-3">Dev Journal</h1>
+            <h1 className="text-5xl sm:text-6xl mb-3 items-center">Dev Journal</h1>
             <Image
               className="ml-3 bg-black rounded-full transition-transform duration-300 hover:scale-110 hover:-rotate-10 cursor-pointer"
               src="/assets/img/github-mark-white.png"

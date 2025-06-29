@@ -28,7 +28,7 @@ export default function LoginNav({}) {
               />
           </div>
           </Link>
-          <div className="flex justify-center items-center">
+          <div className="flex justify-start md:justify-center items-center">
             <form className="flex items-center" action="/search">
               <input type="text" name="query" className="border focus:border-[#5a9ef9] focus:outline-none rounded-lg h-10 resize-none py-2 px-2 overflow-hidden transition-transform duration-300 focus:scale-105 hover:scale-105" placeholder="search..."></input>
               <button type="submit">

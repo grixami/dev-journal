@@ -132,18 +132,18 @@ export default function CreatePost() {
                 <LoginNav/>
                 <MdDraggableEditor addToTextArea={addToTextArea}/>
 
-                <div className="flex scrollbar h-full">
+                <div className="flex flex-col lg:flex-row scrollbar h-full">
                     
                     <label htmlFor="my-editor" className="block w-full border-r-2 border-[#3d444d]">
                         <textarea
                             id="my-editor"
-                            className="w-full h-full resize-none outline-none scrollbar scrollbar-thumb-white p-2"
+                            className="w-full h-[75vh] lg:h-full resize-none outline-none scrollbar scrollbar-thumb-white p-2"
                             placeholder="Start typing..."
                             defaultValue={editorText}
                             onChange={(e) => setEditorText(e.target.value) }
                         />
                     </label>
-                    <div className="w-[30%] bg-[#010409]">
+                    <div className="w-full lg:w-[30%] bg-[#010409]">
                         <div className="border h-full">
                             <div className="flex items-center justify-center">
                                 <div className="my-[6%] relative transition-transform duration-300 ease-in-out hover:scale-105 group">

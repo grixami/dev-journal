@@ -28,8 +28,8 @@ export default function ProfilePost({ postTitle, postDesc, postId, canedit }) {
       <div className="flex justify-between items-center sm:items-start" >
         <a href={`/post/${postId}/view`} className="flex-1">
           <div>
-            <h2 className="text-3xl break-all">{postTitle}</h2>
-            <p className="break-all">{Buffer.from(postDesc, 'base64').toString()}</p>
+            <h2 className="text-3xl break-words">{postTitle}</h2>
+            <p className="break-words">{Buffer.from(postDesc, 'base64').toString()}</p>
           </div>
         </a>
 
@@ -39,7 +39,7 @@ export default function ProfilePost({ postTitle, postDesc, postId, canedit }) {
           onClick={() => delPost()}>
             Delete
           </button>
-                    <button className="ml-4 border-2 bg-cyan-600 hover:bg-cyan-800 text-white font-semibold py-2 px-4 rounded-3xl cursor-pointer"
+          <button className="ml-4 border-2 bg-cyan-600 hover:bg-cyan-800 text-white font-semibold py-2 px-4 rounded-3xl cursor-pointer"
           onClick={() => router.replace(`/post/${postId}/edit`)}>
             Edit
           </button>

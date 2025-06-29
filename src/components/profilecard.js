@@ -121,7 +121,7 @@ export default function ProfileCard({userData, editProfile, isFollowing}) {
             
             </>
         )}
-        <div className="ml-10 flex-col lg:flex-row inline-flex space-x-4 my-4 ">
+        <div className="ml-10 flex-col lg:flex-row inline-flex space-y-2 lg:space-y-0 space-x-4 my-4 ">
 
             <a href={`/user/${userData.id}/followers`}>
                 <div className="bg-black p-2 border-2 rounded-2xl transition-transform duration-300 hover:scale-110">

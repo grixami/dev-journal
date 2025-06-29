@@ -15,6 +15,7 @@ export default function MdDraggableEditor({addToTextArea}) { // addToTextArea is
     }
 
     return (
+        <div className="hidden lg:block scale-80 xl:scale-100">
         <Draggable nodeRef={draggableRef}>
             <div ref={draggableRef} className="z-10 flex flex-row border-2 space-x-4 absolute top-[10%] right-[25%]  bg-[#010409]/30 backdrop-blur-xs text-white p-4 rounded-2xl shadow-lg cursor-move">
                 <div className="bg-[#35383d] rounded-2xl">
@@ -91,5 +92,6 @@ export default function MdDraggableEditor({addToTextArea}) { // addToTextArea is
                 </div>
             </div>
         </Draggable>
+        </div>
     )
 }
