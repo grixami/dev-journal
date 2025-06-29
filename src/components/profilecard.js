@@ -77,22 +77,22 @@ export default function ProfileCard({userData, editProfile, isFollowing}) {
         <p className="ml-10 break-words">{userData?.bio}</p> {/* Break words used so long words do not go across the boarder */}
         <p className="text-start pl-10 mt-5">Created at - {new Date(userData?.createdAt).toLocaleString()}</p>
         {editProfile ? ( 
-            <div className="flex">
+            <div className="flex flex-col xl:flex-row">
                 <div className="mt-4 ml-10"> {/* Button for if a user can edit their profile (only on /dashboard) */}
                     <a href="/dashboard/editprofile"
-                    className="bg-[#3d444d] px-10 py-2 rounded-xl border hover:bg-[#2c3036]"
+                    className="bg-[#3d444d] xl:px-10 px-2 py-2 rounded-xl border hover:bg-[#2c3036]"
                     >Edit Profile</a>
                 </div>
-                <div className="mt-4 ml-5"> {/* Button for if a user can see drafts (only on /dashboard) */}
+                <div className="mt-4 ml-10 xl:ml-5"> {/* Button for if a user can see drafts (only on /dashboard) */}
                     <a href="/dashboard/drafts"
-                    className="bg-[#3d444d] px-10 py-2 rounded-xl border hover:bg-[#2c3036]"
+                    className="bg-[#3d444d] xl:px-10 px-2 py-2 rounded-xl border hover:bg-[#2c3036]"
                     >Drafts</a>
                 </div>
             </div>
         ) : (
             <>
             {!loading ? (
-                <>
+                <div>
                 {isFollowingState ? (
                 <div className="flex">
                     <div className="mt-4 ml-10">
@@ -112,7 +112,7 @@ export default function ProfileCard({userData, editProfile, isFollowing}) {
                     </div>
                 </div>
                 )}
-                </>
+                </div>
             ) : (
                 <>
                 <TransparrentLoadingGif width={100} height={100}/>
@@ -121,7 +121,7 @@ export default function ProfileCard({userData, editProfile, isFollowing}) {
             
             </>
         )}
-        <div className="ml-10 flex space-x-4 my-4 ">
+        <div className="ml-10 flex-col lg:flex-row inline-flex space-x-4 my-4 ">
 
             <a href={`/user/${userData.id}/followers`}>
                 <div className="bg-black p-2 border-2 rounded-2xl transition-transform duration-300 hover:scale-110">

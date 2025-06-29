@@ -15,8 +15,10 @@ export default function Page({ params }) {
   const [postData, setPostData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isFollowing, setIsFollowing] = useState(false)
+  const [currentLocation, setCurrentLocation ] = useState("")
 
     useEffect(() => {
+      setCurrentLocation(window.location)
       const fetchUser = async () => {
       try {
           const userResp = await fetch(`/api/user/getuser?id=${id}`);
@@ -62,6 +64,9 @@ export default function Page({ params }) {
         <title>dev-journal</title>
         <meta name="description" content="A Blogging Site For Devs" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta property="og:title" content={userData?.username}></meta>
+        <meta property="og:url" content={currentLocation}></meta>
+        <meta property="og:description" content={userData?.bio}></meta>
       </Head>
       <div>
         <LoginNav/>
@@ -96,7 +101,6 @@ export default function Page({ params }) {
         ) : (
           <TransparrentLoadingGif width={300} height={300} className="absolute top-1/2 right-1/2 translate-x-1/2 -translate-y-1/2"/>
         )}
-
       </div>
     </>
   )
