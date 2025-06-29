@@ -59,10 +59,10 @@ return (
         <div>
             <LoginNav/>
             {!loading ? (
-            <div className="flex mt-10">
+            <div className="flex flex-col sm:flex-row mt-10">
                 <ProfileCard userData={userData} editProfile={true} />  {/* Shows pfp, username, bio and joinDate */}
                 <div className="flex-grow"></div>
-                <div className="w-1/2 mr-10">
+                <div className="sm:w-1/2 w-4/5 my-10 sm:my-0 mr-10 flex flex-col mx-auto">
                     <div className="border-2 border-white rounded-xl px-5 py-5">
                         <h2 className="text-4xl text-center">Posts</h2>
                     </div>

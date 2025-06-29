@@ -25,7 +25,7 @@ export default function ProfilePost({ postTitle, postDesc, postId, canedit }) {
 
   return (
     <div  id={`post-${postId}`} className="border-2 border-white rounded-xl px-5 py-5 my-5 transform transition-transform duration-500 ease-in-out hover:-translate-x-[4%] hover:bg-[#35383d]">
-      <div className="flex justify-between items-start">
+      <div className="flex justify-between items-center sm:items-start" >
         <a href={`/post/${postId}/view`} className="flex-1">
           <div>
             <h2 className="text-3xl break-all">{postTitle}</h2>

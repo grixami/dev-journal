@@ -51,7 +51,7 @@ export default function ProfileCard({userData, editProfile, isFollowing}) {
     }
 
     return(
-    <div className="w-1/3 ml-10">
+    <div className="sm:w-1/3 w-4/5 ml-10">
     <div className="border rounded-xl px-5 py-5">
         <div className="flex justify-center">
             {userData?.profilepic ? (
