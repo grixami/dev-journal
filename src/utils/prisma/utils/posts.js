@@ -9,6 +9,13 @@ export async function createNewPost(creator, title, desc, content, isPublic, tag
             isPublic: isPublic,
             authorId: creator,
             postTag: tag
+        },
+        include: {
+            author: {
+                select: {
+                    username: true
+                }
+            }
         }
     })
 
@@ -80,6 +87,13 @@ export async function updatePost(id, title, desc, content, isPublic, tag) {
             content: content,
             isPublic: isPublic,
             postTag: tag
+        },
+        include: {
+            author: {
+                select: {
+                    username: true
+                }
+            }
         }
     })
     return post

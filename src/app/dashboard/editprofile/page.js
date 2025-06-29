@@ -71,7 +71,6 @@ export default function Dashboard() {
         };
 
         reader.readAsDataURL(file);
-        console.log(imgData)
     };
 
     let handleSubmit = async (e) => {

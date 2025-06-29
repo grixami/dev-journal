@@ -1,7 +1,9 @@
 const jwt = require("jsonwebtoken");
 const jwtSecret = process.env.JWT_SECRET;
 
+import { sendDiscohookPost } from "@/utils/discord/discohook";
 import { createNewPost } from "@/utils/prisma/utils/posts";
+import { getUserNoPass, getUserWebhook } from "@/utils/prisma/utils/users";
 
 const tags = ["Other", "Robotics", "Cybersecurity", "Software Development"]
 
@@ -43,8 +45,24 @@ export async function POST(request) {
 
         const newPost = await createNewPost(userId, title, descBase64, contentBase64, parseInt(postType), tag)
         
+        if(postType != 1) {
+            return new Response({message: "sucess"}, {
+                    status: 200
+            })
+        }
+
+        const discohook = await getUserWebhook()
+
+        if(!discohook) {
+            return new Response({message: "sucess"}, {
+                status: 200
+            })
+        }
+
+        await sendDiscohookPost(discohook.discohook, `https://devjournal.lol/post/${newPost.id}/view`, newPost.title, desc, newPost.author.username, discohook.discohookcolor)
+
         return new Response({message: "sucess"}, {
-            status: 200
+                status: 200
         })
     } catch (error) {
         return new Response({message: "Internal server error"}, {

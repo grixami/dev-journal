@@ -17,6 +17,10 @@ export default function Settings() {
     const [discohookErrorMsg, setDiscohookErrorMsg] = useState("")
     const [discohookSucessMsg, setDiscohookSucessMsg] = useState("")
 
+    const [discohookColorErrorMsg, setDiscohookColorErrorMsg] = useState("")
+    const [discohookColorSucessMsg, setDiscohookColorSucessMsg] = useState("")
+
+
     let handlePasswordSubmit = async (e) => {
         setPasswordErrorMsg("")
         setPasswordSucessMsg("")
@@ -85,6 +89,40 @@ export default function Settings() {
         return discohookregex.test(discohook)
     }
 
+
+    let handleDiscordWebhookColorSubmit = async () => {
+        setDiscohookColorSucessMsg("")
+        setDiscohookColorErrorMsg("")
+        const colorElement = document.getElementById("webhookcolor")
+        const color = hextToDiscord(colorElement.value)
+        
+        const resp = await fetch("/api/user/updatewebhookcolor", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                token: getCookie("auth_token"),
+                color: color
+            })
+        })
+
+        if(resp.status != 200) {
+            const json = await resp.json()
+            setDiscohookColorErrorMsg(json.message)
+            if(resp.status == 429) {
+                setDiscohookColorErrorMsg("You have been ratelimited")
+            }
+            return
+        }
+
+        setDiscohookColorSucessMsg("sucess")
+    }
+
+    let hextToDiscord = (color) => { // discord colors are an int, not hex code
+        return parseInt(color.replace("#" , ""), 16)
+    }
+
     return(
         <>
             <Head>
@@ -101,10 +139,10 @@ export default function Settings() {
                         <p className="mt-5">New Password</p>
                         <input ref={passRef} type="password" className="border rounded-xl focus:border-[#5a9ef9] focus:outline-none px-3 py-1 mt-2"></input>
                         <button id="submit" className="bg-[#3d444d] mx-3 px-15 py-1 rounded-xl outline hover:bg-[#2c3036] hover:cursor-pointer"
-                        onClick={handlePasswordSubmit}
+                        onClick={() => handlePasswordSubmit}
                         >Update</button>
-
                         </div>
+
                         {passwordErrorMsg.length > 0 && (
                         <div className="bg-red-500 mt-3 px-3 py-3 rounded-2xl border">
                             <p>{passwordErrorMsg}</p>
@@ -117,7 +155,7 @@ export default function Settings() {
                         )}
                     </div>
 
-                    <div className="w-full ml-20">
+                    <div className="w-4/5 ml-20">
                         <div>
                             <p className="mt-5 text-c">Discord webhook - sends messages on post edits and uploading posts</p>
                             <textarea id="discohook" className="w-4/5 border-2 resize-none rounded-2xl focus:outline-none p-2 focus:border-[#5a9ef9]"
@@ -128,12 +166,31 @@ export default function Settings() {
                         </div>
                         {discohookErrorMsg.length > 0 && (
                             <div className="bg-red-500 mt-3 px-3 py-3 rounded-2xl border inline-flex">
-                                <p>{discohookErrorMsg}</p>
+                                <p>Error: {discohookErrorMsg}</p>
                             </div>
                         )}
                         {discohookSucessMsg.length > 0 && (
                             <div className="bg-green-500 mt-3 px-3 py-3 rounded-2xl border inline-flex">
                                 <p>{discohookSucessMsg}</p>
+                            </div>
+                        )}
+                    </div>
+                    <div className="w-4/5 ml-20 my-10">
+                        <div className="">
+                            <p>Discord Embed Color</p>
+                            <input id="webhookcolor" type="color"></input>
+                            <br></br>
+                            <button className="inline-flex bg-[#3d444d] mx-3 px-15 py-1 rounded-xl outline hover:bg-[#2c3036] hover:cursor-pointer"
+                            onClick={() => handleDiscordWebhookColorSubmit()}>Submit webhook color</button>
+                        </div>
+                        {discohookColorErrorMsg.length > 0 && (
+                            <div className="bg-red-500 mt-3 px-3 py-3 rounded-2xl border inline-flex">
+                                <p>Error: {discohookColorErrorMsg}</p>
+                            </div>
+                        )}
+                        {discohookColorSucessMsg.length > 0 && (
+                            <div className="bg-green-500 mt-3 px-3 py-3 rounded-2xl border inline-flex">
+                                <p>{discohookColorSucessMsg}</p>
                             </div>
                         )}
                     </div>
