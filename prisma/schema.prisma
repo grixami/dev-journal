@@ -24,6 +24,8 @@ model User {
 
   followers Follow[]  @relation("userFollowers")
   following Follow[]  @relation("userFollowing")
+
+  discohook       String?       // discord webhook for creating and editing posts
 }
 
 model Authcode {

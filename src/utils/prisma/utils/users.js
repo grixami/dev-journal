@@ -154,3 +154,14 @@ export async function getUserByEmail(email) {
     return user
     
 }
+
+export async function updateDiscohook(userId, webhookUrl) {
+    const user = await prisma.user.update({
+        where: { id: userId },
+        data: {
+            discohook: webhookUrl
+        }
+    })
+
+    return user
+}
