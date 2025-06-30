@@ -54,11 +54,11 @@ export default function Custom404() {
                 ) : (
                     <NotLoginNav/>
                 )}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-10 border-5 rounded-4xl"
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 md:p-10 p-5 border-5 rounded-4xl"
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
                 style={{ boxShadow: "0 0 10px 3px rgba(255,255,255,0.8)", transform: transformBox, transition: "transform 0.2s ease-out" }}>
-                    <h1 className="lg:text-7xl text-5xl"><b>404: Page not found</b></h1>
+                    <h1 className="lg:text-7xl md:text-5xl text-2xl"><b>404: Page not found</b></h1>
                 </div> 
             </div>
         </>

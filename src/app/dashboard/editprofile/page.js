@@ -109,7 +109,7 @@ export default function Dashboard() {
             </Head>
             <LoginNav/>
             <div className="flex justify-center items-center my-10">
-                <div className="flex flex-col justify-center items-center w-2/5 border py-10 rounded-2xl">
+                <div className="flex flex-col justify-center items-center w-4/5 md:w-3/5 lg:w-2/5 border py-10 rounded-2xl">
                     <div className="relative group">
                         {imgData ? (
                             <Image
@@ -160,11 +160,11 @@ export default function Dashboard() {
                     )}
                     <div className="mt-10">
                         <p>Username</p>
-                        <input type="text" ref={usernameRef} className="border border-white focus:border-[#5a9ef9] focus:outline-none px-3 py-1 rounded-xl" placeholder="username..." defaultValue={userData?.username}></input>
+                        <input type="text" ref={usernameRef} className="w-[90%] border border-white focus:border-[#5a9ef9] focus:outline-none px-3 py-1 rounded-xl" placeholder="username..." defaultValue={userData?.username}></input>
                     </div>
                     <div className="mt-5">
                         <p>Bio - {bioText.length}/256</p>
-                        <textarea id="biotextarea" maxLength="256" ref={bioRef} className="border border-white focus:border-[#5a9ef9] focus:outline-none px-3 py-1 rounded-xl w-100 h-40 overflow-hidden resize-none" placeholder="bio..." defaultValue={userData?.bio}
+                        <textarea id="biotextarea" maxLength="256" ref={bioRef} className="border border-white focus:border-[#5a9ef9] focus:outline-none px-3 py-1 rounded-xl lg:w-100 w-[90%] h-40 overflow-hidden resize-none" placeholder="bio..." defaultValue={userData?.bio}
                         onChange={(e) => {
                             setBioText(e.target.value);
                         }}></textarea>
@@ -180,7 +180,7 @@ export default function Dashboard() {
                             <TransparrentLoadingGif className="mx-auto block"/>
 
                         ) : (
-                            <button id="submit" className="bg-[#3d444d] px-15 py-1 rounded-xl outline hover:bg-[#2c3036]"
+                            <button id="submit" className="bg-[#3d444d] px-10 sm:px-15 py-1 rounded-xl outline hover:bg-[#2c3036] "
                             onClick={handleSubmit}
                             >Submit</button>
 

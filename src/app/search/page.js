@@ -55,7 +55,7 @@ function Search() {
             <div className="flex flex-col h-screen">
                 <LoginNav/>
                 {isLoading == false && (
-                <div className="flex items-center justify-center mt-10 space-x-5">
+                <div className="flex sm:flex-row space-y-2 sm:space-y-0 flex-col items-center justify-center mt-10 space-x-5">
                     <div className="relative transition-transform duration-300 ease-in-out hover:scale-105 group">
                         <div className="absolute inset-0 opacity-0 rounded-3xl blur group-hover:opacity-100 group-hover:bg-amber-50">
 
@@ -132,7 +132,7 @@ function Search() {
                 )}
                 
                 <div className="flex overflow-y-auto scrollbar scrollbar-thumb-white">
-                    <div className="flex flex-col space-y-5 mt-10 w-3/5 ml-[10%]">
+                    <div className="flex flex-col space-y-5 mt-10 sm:w-3/5 w-4/5 ml-[10%]">
                     {display == "users" && userData && userData.map(user => (
                         <SearchUserProfile
                             key={user.id}
@@ -158,12 +158,12 @@ function Search() {
                     }
                     {display == "posts" && postData && postData.length == 0 && (
                         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                            <p className="text-center text-9xl">No posts found</p>
+                            <p className="text-center text-7xl sm:text-9xl">No posts found</p>
                         </div>
                     )}
                     {display == "users" && !userData && !noQuery && (
                         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                            <p className="text-center text-9xl">No users found</p>
+                            <p className="text-center text-7xl sm:text-9xl">No users found</p>
                         </div>
                     )}
 

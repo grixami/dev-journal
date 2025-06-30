@@ -9,6 +9,8 @@ import remarkRehype from "remark-rehype";
 import rehypeKatex from "rehype-katex";
 import rehypeStringify from "rehype-stringify";
 import rehypePrettyCode from "rehype-pretty-code";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import { transformerCopyButton } from "@rehype-pretty/transformers";
 import { useEffect, useState } from "react";
 
@@ -36,6 +38,11 @@ export default function RenderMarkdown({contentParam}) {
               ]
             })
             .use(rehypeStringify)
+            .use(rehypeSlug)
+            .use(rehypeAutolinkHeadings, {
+              behavior: "append",
+              properties: { class: "heading-anchor"}
+            })
             .process(matterResult.content);
           setContentHtml(processed.toString());
         }

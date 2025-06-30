@@ -96,7 +96,7 @@ export default function ViewPost({ params }) {
     }
 
     return (
-        <>
+        <div>
         <Head>
             <title>dev-journal</title>
             <meta name="description" content="A Blogging Site For Devs" />
@@ -114,25 +114,29 @@ export default function ViewPost({ params }) {
                     </div>
                 </div>
 
-                <div className=" w-3/5 my-[3%] ml-[3%] rounded-3xl inline-block border-3 p-5">
-                <div className="flex justify-between">
-                    <div className="">
-                        <button className="bg-[#010409] p-2 rounded-3xl border-2 transition-transform duration-300 hover:bg-[#35383d] hover:scale-105 hover:cursor-pointer"
-                        onClick={() => exportPost()}>
-                            <p className="text-2xl">Export Post</p>
-                        </button>
+                <div className="w-3/5 my-[3%] ml-[3%] rounded-3xl border-3 p-5 hidden sm:inline-block"> {/* desktop layout */}
+                    <div className="flex justify-between">
+                        <div className="">
+                            <button className="bg-[#010409] p-2 rounded-3xl border-2 transition-transform duration-300 hover:bg-[#35383d] hover:scale-105 hover:cursor-pointer"
+                            onClick={() => exportPost()}>
+                                <p className="text-2xl">Export Post</p>
+                            </button>
+                        </div>
+                        <div className="justify-end items-end">
+                            <Image
+                                className="dark:invert hover:cursor-pointer"
+                                src="/assets/img/share.png"
+                                alt=""
+                                width={50}
+                                height={50}
+                                onClick={() => copyUrl()}
+                            />
+                        </div>
                     </div>
-                    <div className="justify-end items-end">
-                        <Image
-                        className="dark:invert hover:cursor-pointer"
-                        src="/assets/img/share.png"
-                        alt=""
-                        width={50}
-                        height={50}
-                        onClick={() => copyUrl()}
-                        />
-                    </div>
-                </div>
+
+                
+
+
                     <div className="flex flex-row justify-center items-start space-x-3">
                         <a href={`/user/${postData?.authorId}/profile`} className="p-2">
                             <p className="text-2xl text-blue-800 mb-4">By: {postData?.author.username}</p>
@@ -149,10 +153,9 @@ export default function ViewPost({ params }) {
                             </button>
                         )}
 
-                    
-
-
+                        
                     </div>
+
                     <div className="flex flex-col lg:flex-row items-center justify-center space-x-5">
                         <h1 className="text-7xl break-all font-bold mb-4">{postData?.title}</h1>
                         <div className="border-2 rounded-4xl">
@@ -171,49 +174,89 @@ export default function ViewPost({ params }) {
                     <hr className="my-5"></hr>
                     <p className="text-xl break-words">{Buffer.from(postData.desc, 'base64').toString()}</p>
                 </div>
-
-                <div className="p-10">
-                    {viewPretty ? (
-                        <RenderMarkdown contentParam={Buffer.from(postData.content, 'base64').toString()} />
-                    ) : (
-                        <div dangerouslySetInnerHTML={{ __html: `<pre>${Buffer.from(postData.content, 'base64').toString()}</pre>` }} />
-                    )}
-                </div>
-
-                <hr className="border-2"></hr>
-
-                <div className="mt-10 pl-10">
-                    <div className="flex flex-col">
-                        <div className="flex justify-start">
-                            <div className="flex flex-col space-y-3">
-                                <textarea id="commentbox" className="p-2 rounded-2xl resize-none border-2 w-[200%] h-30 focus:border-[#5a9ef9] focus:outline-none" maxLength={100}>
-
-                                </textarea>
-                                {commentSending ? (
-                                    <TransparrentLoadingGif/>
-                                ) : (
-                                <button className="bg-black p-2 rounded-3xl border-2 transition-transform duration-300 hover:scale-105 hover:cursor-pointer"
-                                onClick={() => postComment()}>
-                                    <p>add comment</p>
-                                </button>
-                                )}
-
-                            </div>
-                            
-                        </div>
-                        {commentResponse && (
-                        <div id="commentrespbox" className={`inline-flex max-w-lg ${commentResponse == "sucess" ? ("bg-green-500") : ("bg-red-500")} p-2 rounded-2xl mt-2`}>
-                            <h2 className="text-3xl">{commentResponse == "sucess" ? ("") : ("Error: ")} {commentResponse}</h2>
-                        </div>
+                
+                
+                <div className="w-11/12 my-[3%] ml-[3%] rounded-3xl border-3 p-5 inline-block sm:hidden"> {/* Mobile layout */}
+                    <div className="flex flex-row justify-center items-start space-x-3">
+                        <a href={`/user/${postData?.authorId}/profile`} className="p-2">
+                            <p className="text-2xl text-blue-800 mb-4">By: {postData?.author.username}</p>
+                        </a>
+                        {viewPretty == true ? (
+                            <button className="bg-[#010409] p-2 rounded-3xl border-2 transition-transform duration-300 hover:bg-[#35383d] hover:scale-105 hover:cursor-pointer"
+                            onClick={() => setViewPretty(false)}>
+                                <p className="text-2xl">View Raw</p>
+                            </button>
+                        ) : (
+                            <button className="bg-[#010409] p-2 rounded-3xl border-2 transition-transform duration-300 hover:bg-[#35383d] hover:scale-105 hover:cursor-pointer"
+                            onClick={() => setViewPretty(true)}>
+                                <p className="text-2xl">View Pretty</p>
+                            </button>
                         )}
 
-                        <div className="pt-10 flex flex-col space-y-7">
-                        {commentData && commentData.map(comment => (
-                            <Comment key={comment.id} comment={comment}/>
-                        ))}
+                        
+                    </div>
+
+                    <div className="flex flex-col lg:flex-row items-center justify-center space-x-5">
+                        <h1 className="text-4xl break-words font-bold mb-4 mt-2">{postData?.title}</h1>
+                        <div className="border-2 rounded-4xl">
+                            <div className="flex items-center justify-center p-3">
+                                <Image
+                                className="dark:invert"
+                                src="/assets/img/eyeicon.png"
+                                alt=""
+                                width={40}
+                                height={40}
+                                />
+                                <p className="ml-3">{postData?.views}</p>
+                            </div>
                         </div>
                     </div>
+                    <hr className="my-5"></hr>
+                    <p className="text-lg break-words">{Buffer.from(postData.desc, 'base64').toString()}</p>
                 </div>
+                    
+            <div className="p-10">
+                {viewPretty ? (
+                    <RenderMarkdown contentParam={Buffer.from(postData.content, 'base64').toString()} />
+                ) : (
+                    <div dangerouslySetInnerHTML={{ __html: `<pre>${Buffer.from(postData.content, 'base64').toString()}</pre>` }} />
+                )}
+            </div>
+
+            <hr className="border-2"></hr>
+
+            <div className="mt-10 sm:ml-10">
+                <div className="flex flex-col">
+                    <div className="flex justify-start">
+                        <div className="flex flex-col space-y-3">
+                            <textarea id="commentbox" className="p-2 rounded-2xl resize-none border-2 w-[150%] sm:w-[200%] h-30 focus:border-[#5a9ef9] focus:outline-none" maxLength={100}>
+
+                            </textarea>
+                            {commentSending ? (
+                                <TransparrentLoadingGif/>
+                            ) : (
+                            <button className="bg-black p-2 rounded-3xl border-2 transition-transform duration-300 hover:scale-105 hover:cursor-pointer"
+                            onClick={() => postComment()}>
+                                <p>add comment</p>
+                            </button>
+                            )}
+
+                        </div>
+                        
+                    </div>
+                    {commentResponse && (
+                    <div id="commentrespbox" className={`inline-flex max-w-lg ${commentResponse == "sucess" ? ("bg-green-500") : ("bg-red-500")} p-2 rounded-2xl mt-2`}>
+                        <h2 className="text-3xl">{commentResponse == "sucess" ? ("") : ("Error: ")} {commentResponse}</h2>
+                    </div>
+                    )}
+
+                    <div className="pt-10 flex flex-col space-y-7 w-4/5 sm:w-auto">
+                    {commentData && commentData.map(comment => (
+                        <Comment key={comment.id} comment={comment}/>
+                    ))}
+                    </div>
+                </div>
+            </div>
                 
             </div>
             ) : (
@@ -228,6 +271,6 @@ export default function ViewPost({ params }) {
             </div>
             
             )}
-        </>
+        </div>
     )
 }

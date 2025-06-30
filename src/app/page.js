@@ -85,7 +85,7 @@ export default function Home() {
       <div>
         <div className="flex flex-col justify-center items-center py-20">
           <div className="flex items-center">
-            <h1 className="text-6xl mb-3">Dev Journal</h1>
+            <h1 className="text-5xl sm:text-6xl mb-3 items-center">Dev Journal</h1>
             <Image
               className="ml-3 bg-black rounded-full transition-transform duration-300 hover:scale-110 hover:-rotate-10 cursor-pointer"
               src="/assets/img/github-mark-white.png"
@@ -100,7 +100,7 @@ export default function Home() {
           <p>A place to blog about tech</p>
         </div>
         <div className="pt-10 lg:flex flex-row items-center justify-center hidden">
-          <div className="border-2 px-10 py-10 mx-35 rounded-2xl w-96 bg-[#1d2222]"
+          <div className="border-2 px-10 py-10 md:mx-10 mx-35 rounded-2xl w-96 bg-[#1d2222]"
           onMouseMove={handleMouseMoveFirstBox}
           onMouseLeave={handleMouseLeaveFirstBox}
           style={{ boxShadow: "0 0 10px 3px rgba(255,255,255,0.8)", transform: transformFirstBox, transition: "transform 0.2s ease-out" }}>

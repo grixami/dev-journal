@@ -17,7 +17,7 @@ export default function NotLoginNav({}) {
         <div className="w-full flex items-center justify-between px-4">
           <Link href="/">
           <div className="flex items-center gap-0">
-          <h1 className="font-bold text-3xl px-2 pl-20">Dev Journal</h1>
+          <h1 className="font-bold text-3xl px-2 sm:pl-20 pl-0">Dev Journal</h1>
             <Image
                 className="dark:invert"
                 src="/assets/img/logo.png"
@@ -35,7 +35,7 @@ export default function NotLoginNav({}) {
           </nav>
           <div className="md:hidden relative">
               <Image
-              className="dark:invert"
+              className="dark:invert hover:cursor-pointer"
               src={"/assets/img/menuicon.png"}
               alt="menu"
               width={50}

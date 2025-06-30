@@ -39,7 +39,7 @@ export default function Drafts() {
             
             { !loading ? (
                 <div className="flex justify-center items-center">
-                <div className="w-1/2 mt-10">
+                <div className=" w-4/5 sm:w-3/5 md:1/2 mt-10">
                     <div className="border-2 border-white rounded-xl px-5 py-5">
                         <h2 className="text-4xl text-center">Posts</h2>
                     </div>
