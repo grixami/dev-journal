@@ -51,7 +51,7 @@ export default function ProfileCard({userData, editProfile, isFollowing}) {
     }
 
     return(
-    <div className="sm:w-1/3 w-4/5 ml-10">
+    <div className="md:w-1/3 w-4/5 ml-auto md:mr-0 mr-auto">
     <div className="border rounded-xl px-5 py-5">
         <div className="flex justify-center">
             {userData?.profilepic ? (
@@ -75,7 +75,7 @@ export default function ProfileCard({userData, editProfile, isFollowing}) {
         <div className="h-[2px] bg-[#3d444d] w-full mt-5"></div>
         <h2 className="text-3xl text-start ml-10 mt-3">{userData?.username}</h2>
         <p className="ml-10 break-words">{userData?.bio}</p> {/* Break words used so long words do not go across the boarder */}
-        <p className="text-start pl-10 mt-5">Created at - {new Date(userData?.createdAt).toLocaleString()}</p>
+        <p className="text-start pl-10 mt-5 text-xs sm:text-lg">Created at - {new Date(userData?.createdAt).toLocaleString()}</p>
         {editProfile ? ( 
             <div className="flex flex-col xl:flex-row">
                 <div className="mt-4 ml-10"> {/* Button for if a user can edit their profile (only on /dashboard) */}

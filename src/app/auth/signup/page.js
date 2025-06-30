@@ -177,7 +177,7 @@ export default function Signup() {
             <div className="py-2">
                 <label className="block mb-2" htmlFor="email">email</label>
                 <input type="email" id="email" name="email" placeholder="Enter your email" required
-                    className="w-full mb-4 rounded-md p-2 bg-[#1a1f21] border border-[#3d444d] focus:outline-none focus:border-[#5a9ef9]"
+                    className="w-full mb-4 rounded-md p-2 bg-[#1a1f21] border border-[#3d444d] focus:outline-none focus:border-[#5a9ef9] "
                     onChange={e => setEmail(e.target.value)}
 
                 />
@@ -208,7 +208,7 @@ export default function Signup() {
                     />
                     {!checkCodeLoading ? (
                     <div>
-                      <button className="bg-black border-2 transition-transform duration-300 hover:scale-105 hover:cursor-pointer p-2 rounded-3xl"
+                      <button className="bg-black border-2 transition-transform duration-300 hover:scale-105 hover:cursor-pointer p-2 rounded-3xl "
                       onClick={() => checkAuthCode()}>
                       <p>Submit and go to next stage</p>
                       </button>
@@ -262,7 +262,7 @@ export default function Signup() {
                     {submitted ? (
                       <TransparrentLoadingGif className="mx-auto block"/>
                     ) : (
-                      <button type="submit"className="mx-auto block border border-[#f0f6fc] px-4 py-2 rounded-lg hover:bg-[#35383d]">Sign Up</button>
+                      <button type="submit"className="mx-auto block border border-[#f0f6fc] px-4 py-2 rounded-lg hover:bg-[#35383d] hover:cursor-pointer">Sign Up</button>
                     )}
                 </form>
             </div>

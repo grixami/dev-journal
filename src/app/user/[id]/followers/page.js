@@ -36,7 +36,7 @@ export default function UserFollowers({ params }) {
             </div>
             <div className="flex justify-center items-center mt-10">
                 {followerData && followerData.map((follower) => (
-                    <div key={follower.id} className="w-2/3">
+                    <div key={follower.id} className="sm:w-2/3 w-11/12">
                         <SearchUserProfile userId={follower.follower.id} username={follower.follower.username} bio={follower.follower.bio} pfp={follower.follower.profilepic}/>
                     </div>
                 ))}

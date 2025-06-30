@@ -74,7 +74,7 @@ export default function ResetPassword() {
                 <NotLoginNav/>
                 <div className="flex items-center justify-center">
                     <div className="border border-[#3d444d] w-full max-w-xl rounded-2xl bg-[#1d2222] p-6 flex flex-col items-center shadow-[0_0_20px_#3d444d] my-60">
-                        <h1 className="text-5xl">Reset password</h1>
+                        <h1 className="md:text-5xl text-3xl">Reset password</h1>
                         <div className="mt-10">
                             <p className="text-2xl">email</p>
                             <input type="email" id="email" className="p-1 flex border border-[#3d444d] focus:outline-none focus:border-[#5a9ef9] rounded"></input>

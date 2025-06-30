@@ -197,22 +197,22 @@ export default function ViewPost({ params }) {
                     </div>
 
                     <div className="flex flex-col lg:flex-row items-center justify-center space-x-5">
-                        <h1 className="text-5xl break-words font-bold mb-4">{postData?.title}</h1>
+                        <h1 className="text-4xl break-words font-bold mb-4 mt-2">{postData?.title}</h1>
                         <div className="border-2 rounded-4xl">
-                            <div className="flex items-center justify-center p-2">
+                            <div className="flex items-center justify-center p-3">
                                 <Image
                                 className="dark:invert"
                                 src="/assets/img/eyeicon.png"
                                 alt=""
-                                width={50}
-                                height={50}
+                                width={40}
+                                height={40}
                                 />
                                 <p className="ml-3">{postData?.views}</p>
                             </div>
                         </div>
                     </div>
                     <hr className="my-5"></hr>
-                    <p className="text-xl break-words">{Buffer.from(postData.desc, 'base64').toString()}</p>
+                    <p className="text-lg break-words">{Buffer.from(postData.desc, 'base64').toString()}</p>
                 </div>
                     
             <div className="p-10">

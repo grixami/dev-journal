@@ -25,7 +25,7 @@ export default function ProfilePost({ postTitle, postDesc, postId, canedit }) {
 
   return (
     <div  id={`post-${postId}`} className="border-2 border-white rounded-xl px-5 py-5 my-5 transform transition-transform duration-500 ease-in-out hover:-translate-x-[4%] hover:bg-[#35383d]">
-      <div className="flex justify-between items-center sm:items-start" >
+      <div className="flex justify-between items-center sm:items-start flex-col lg:flex-row" >
         <a href={`/post/${postId}/view`} className="flex-1">
           <div>
             <h2 className="text-3xl break-words">{postTitle}</h2>
@@ -34,7 +34,7 @@ export default function ProfilePost({ postTitle, postDesc, postId, canedit }) {
         </a>
 
         {canedit && (
-          <div>
+          <div className='my-3 lg:my-0 items-center'>
           <button className="ml-4 border-2 bg-red-600 hover:bg-red-800 text-white font-semibold py-2 px-4 rounded-3xl cursor-pointer"
           onClick={() => delPost()}>
             Delete
