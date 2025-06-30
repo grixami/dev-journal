@@ -78,15 +78,20 @@ export default function ProfileCard({userData, editProfile, isFollowing}) {
         <p className="text-start pl-10 mt-5 text-xs sm:text-lg">Created at - {new Date(userData?.createdAt).toLocaleString()}</p>
         {editProfile ? ( 
             <div className="flex flex-col xl:flex-row">
-                <div className="mt-4 ml-10"> {/* Button for if a user can edit their profile (only on /dashboard) */}
+                <div className="mt-4 ml-10">
                     <a href="/dashboard/editprofile"
-                    className="bg-[#3d444d] xl:px-10 px-2 py-2 rounded-xl border hover:bg-[#2c3036]"
+                    className="bg-[#3d444d] xl:px-5 px-2 py-2 rounded-xl border hover:bg-[#2c3036]"
                     >Edit Profile</a>
                 </div>
-                <div className="mt-4 ml-10 xl:ml-5"> {/* Button for if a user can see drafts (only on /dashboard) */}
+                <div className="mt-4 ml-10 xl:ml-5">
                     <a href="/dashboard/drafts"
-                    className="bg-[#3d444d] xl:px-10 px-2 py-2 rounded-xl border hover:bg-[#2c3036]"
+                    className="bg-[#3d444d] xl:px-5 px-2 py-2 rounded-xl border hover:bg-[#2c3036]"
                     >Drafts</a>
+                </div>
+                <div className="mt-4 ml-10 xl:ml-5">
+                    <a href="/dashboard/questions"
+                    className="bg-[#3d444d] xl:px-5 px-2 py-2 rounded-xl border hover:bg-[#2c3036]"
+                    >View questions</a>
                 </div>
             </div>
         ) : (
@@ -136,6 +141,7 @@ export default function ProfileCard({userData, editProfile, isFollowing}) {
             </a>
         </div>
         </div>
+        
     </div>
     )
 }
