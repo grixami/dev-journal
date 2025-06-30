@@ -9,3 +9,20 @@ Dev journal is a blogging site for developers to post about their projects or an
 [https://devjournal.lol](https://devjournal.lol)
 
 this has been made for [hackclub neighborhood](https://neighborhood.hackclub.com)
+
+
+## Features
+
+- [x]  Login and signup
+- [x]  Creating and editing posts
+- [x]  Creating comments
+- [x]  drafts
+- [x]  bookmarking posts
+- [x]  discord webhook integration
+- [x]  searching
+- [x]  mobile support
+- [ ]  sending questions to posters
+- [ ]  expore recent posts
+- [ ]  upvotes
+- [ ]  messaging
+
