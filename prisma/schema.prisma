@@ -27,6 +27,20 @@ model User {
 
   discohook       String?       // discord webhook for creating and editing posts
   discohookcolor  Int   @default(12332021)
+
+  bookmarks       Bookmark[]
+}
+
+model Bookmark {
+    id                Int         @id @default(autoincrement())
+
+    post              Post        @relation(fields: [postId], references: [id], onDelete: Cascade)
+    postId            Int
+
+    user              User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId            Int
+
+    @@unique([postId, userId])
 }
 
 model Authcode {
@@ -54,7 +68,8 @@ model Post {
   author    User        @relation("UserPosts", fields: [authorId], references: [id], onDelete: Cascade)
   authorId  Int
     
-  comments Comment[]
+  comments    Comment[]
+  bookmarks   Bookmark[]
 }
 
 model Comment {

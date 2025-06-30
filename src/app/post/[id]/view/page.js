@@ -20,16 +20,25 @@ export default function ViewPost({ params }) {
     const [commentResponse, setCommentResponse] = useState(null)
     const [currentLocation, setCurrentLocation ] = useState("")
 
+    const [isBookmarked, setIsBookmarked] = useState(false)
+
     useEffect(() => {
         setCurrentLocation(window.location)
         const fetchPost = async () => {
             try {
+                
                 const postDataResp = await fetch(`/api/post/getpost?id=${id}&view=1`, {
                     method: "GET",
                 });
 
                 const postData = await postDataResp.json();
                 setPostData(postData);
+
+                const bookmarkDataResp = await fetch(`/api/bookmarks/isbookmarked?token=${getCookie("auth_token")}&postId=${id}`)
+                if(bookmarkDataResp.status == 200) {
+                    const bookmarkData = await bookmarkDataResp.json()
+                    setIsBookmarked(bookmarkData.bookmarkStatus)
+                }
 
                 const commentDataResp = await fetch(`/api/comment/getcomments?id=${id}`, {
                     method: "GET",
@@ -95,6 +104,22 @@ export default function ViewPost({ params }) {
         link.click()
     }
 
+    const toggleBookmark = async () => {
+        setIsBookmarked(!isBookmarked)
+        const resp = await fetch("/api/bookmarks/setbookmark", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                token: getCookie("auth_token"),
+                postId: id,
+                bookmarkStatus: !isBookmarked
+            })
+        })
+
+    }
+
     return (
         <div>
         <Head>
@@ -122,15 +147,43 @@ export default function ViewPost({ params }) {
                                 <p className="text-2xl">Export Post</p>
                             </button>
                         </div>
-                        <div className="justify-end items-end">
-                            <Image
-                                className="dark:invert hover:cursor-pointer"
-                                src="/assets/img/share.png"
-                                alt=""
-                                width={50}
-                                height={50}
-                                onClick={() => copyUrl()}
-                            />
+                        <div className="flex space-x-5">
+                            {isBookmarked ? (
+                            <div className="justify-end items-end">
+                                <Image
+                                    className="dark:invert hover:cursor-pointer"
+                                    src="/assets/img/bookmarkfill.png"
+                                    alt=""
+                                    width={50}
+                                    height={50}
+                                    onClick={() => toggleBookmark()}
+                                    
+                                />
+                            </div>
+                            ) : (
+                            <div className="justify-end items-end">
+                                <Image
+                                    className="dark:invert hover:cursor-pointer"
+                                    src="/assets/img/bookmark.png"
+                                    alt=""
+                                    width={50}
+                                    height={50}
+                                    onClick={() => toggleBookmark()}
+                                    
+                                />
+                            </div>
+                            )}
+
+                            <div className="justify-end items-end">
+                                <Image
+                                    className="dark:invert hover:cursor-pointer"
+                                    src="/assets/img/share.png"
+                                    alt=""
+                                    width={50}
+                                    height={50}
+                                    onClick={() => copyUrl()}
+                                />
+                            </div>
                         </div>
                     </div>
 

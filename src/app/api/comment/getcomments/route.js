@@ -5,7 +5,7 @@ import { getComments } from "@/utils/prisma/utils/comments"
 
 
 export async function GET(request) {
-    const { searchParams} = new URL(request.url)
+    const { searchParams } = new URL(request.url)
     const id =  parseInt(searchParams.get("id"));
 
     try {

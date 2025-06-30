@@ -44,6 +44,7 @@ export default function LoginNav({}) {
           </div>
           <nav>
             <ul className="justify-end px-4 hidden xl:flex">
+              <li className="mx-2 transition-transform duration-300 ease-in-out hover:scale-105"><UrlButton buttonText="Bookmarks" link="/dashboard/bookmarks"/></li>
               <li className="mx-2 transition-transform duration-300 ease-in-out hover:scale-105"><UrlButton buttonText="Settings" link="/dashboard/settings"/></li>
               <li className="mx-2 transition-transform duration-300 ease-in-out hover:scale-105"><UrlButton buttonText="Create Post" link="/dashboard/createpost"/></li>
               <li className="mx-2 transition-transform duration-300 ease-in-out hover:scale-105"><UrlButton buttonText="Dashboard" link="/dashboard"/></li>
@@ -63,6 +64,7 @@ export default function LoginNav({}) {
           {menuOpen && (
             <div className="absolute top-full right-4 mt-2 w-48 bg-[#010409] border border-gray-700 rounded-lg shadow-lg z-50 transition-transform origin-top-right animate-scale-in">
               <ul className="flex flex-col space-y-5 p-4">
+                <li><UrlButton buttonText="Bookmarks" link="/dashboard/settings" fullWidth /></li>
                 <li><UrlButton buttonText="Settings" link="/dashboard/settings" fullWidth /></li>
                 <li><UrlButton buttonText="Create Post" link="/dashboard/createpost" fullWidth /></li>
                 <li><UrlButton buttonText="Dashboard" link="/dashboard" fullWidth /></li>
