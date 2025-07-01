@@ -13,6 +13,7 @@ export async function getUserNoPass(id) {
             createdAt: true,
             permissionlevel: true,
             email: false,
+            allowquestions: true,
             _count: {
                 select: {
                     followers: true,
@@ -187,4 +188,16 @@ export async function getUserWebhook(userId) {
     })
     
     return webhookUser
+}
+
+export async function updateQuestionStatus(userId, status) {
+    const updatedUser = await prisma.user.update({
+        where: { id: userId },
+        data: {
+            allowquestions: status
+        }
+    })
+
+    return updatedUser
+    
 }

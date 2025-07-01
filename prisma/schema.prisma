@@ -25,10 +25,15 @@ model User {
   followers Follow[]  @relation("userFollowers")
   following Follow[]  @relation("userFollowing")
 
+  sentQustions      Question[]  @relation("sentQustions")
+  receivedQuestions  Question[]  @relation("receivedQuestions")
+
   discohook       String?       // discord webhook for creating and editing posts
   discohookcolor  Int   @default(12332021)
 
   bookmarks       Bookmark[]
+
+  allowquestions  Int     @default(1)
 }
 
 model Bookmark {
@@ -94,4 +99,18 @@ model Follow {
   followingId   Int
 
   @@unique([followerId, followingId])
+}
+
+model Question{ 
+  id            Int     @id @default(autoincrement())
+
+  sender        User    @relation("sentQustions", fields: [senderId], references: [id], onDelete: Cascade)
+  senderId      Int
+
+  receiver       User    @relation("receivedQuestions", fields: [receiverId], references: [id], onDelete: Cascade)
+  receiverId     Int
+
+  question      String
+  response      String?
+  ignored       Int     @default(0)     // if a user chooses to ignore a question, the value will be 1
 }
