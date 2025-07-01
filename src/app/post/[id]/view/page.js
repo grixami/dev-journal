@@ -230,6 +230,33 @@ export default function ViewPost({ params }) {
                 
                 
                 <div className="w-11/12 my-[3%] ml-[3%] rounded-3xl border-3 p-5 inline-block sm:hidden"> {/* Mobile layout */}
+                <div className="justify-end items-end flex mb-4">
+                {isBookmarked ? (
+                <div className="justify-end items-end">
+                    <Image
+                        className="dark:invert hover:cursor-pointer"
+                        src="/assets/img/bookmarkfill.png"
+                        alt=""
+                        width={50}
+                        height={50}
+                        onClick={() => toggleBookmark()}
+                        
+                    />
+                </div>
+                ) : (
+                <div className="justify-end items-end">
+                    <Image
+                        className="dark:invert hover:cursor-pointer"
+                        src="/assets/img/bookmark.png"
+                        alt=""
+                        width={50}
+                        height={50}
+                        onClick={() => toggleBookmark()}
+                        
+                    />
+                </div>
+                )}
+                </div>
                     <div className="flex flex-row justify-center items-start space-x-3">
                         <a href={`/user/${postData?.authorId}/profile`} className="p-2">
                             <p className="text-2xl text-blue-800 mb-4">By: {postData?.author.username}</p>

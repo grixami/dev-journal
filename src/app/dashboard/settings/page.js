@@ -20,6 +20,9 @@ export default function Settings() {
     const [discohookColorErrorMsg, setDiscohookColorErrorMsg] = useState("")
     const [discohookColorSucessMsg, setDiscohookColorSucessMsg] = useState("")
 
+    const [allowQuestionErrorMsg, setAllowQuestionErrorMsg] = useState("")
+    const [allowQuestionSucessMsg, setAllowQuestionSucessMsg] = useState("")
+
 
     let handlePasswordSubmit = async (e) => {
         setPasswordErrorMsg("")
@@ -123,6 +126,35 @@ export default function Settings() {
         return parseInt(color.replace("#" , ""), 16)
     }
 
+    let handleAllowQuestionsSubmit = async () => {
+        setAllowQuestionErrorMsg("")
+        setAllowQuestionSucessMsg("")
+
+        const checkedElement = document.getElementById("allowquestion")
+        const checkedBool = checkedElement.checked
+        const checked = checkedBool ? 1 : 0
+        const resp = await fetch("/api/user/updatequestionstatus", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                token: getCookie("auth_token"),
+                allowQuestions: checked
+            })
+        })
+
+        if(resp.status != 200) {
+            const respJson = await resp.json()
+            setAllowQuestionErrorMsg(respJson.message)
+            if(resp.status == 429) {
+                setAllowQuestionErrorMsg("You have been rate limited")
+            }
+        } else{
+            setAllowQuestionSucessMsg("sucess")
+        }
+    }
+
     return(
         <>
             <Head>
@@ -193,6 +225,27 @@ export default function Settings() {
                         {discohookColorSucessMsg.length > 0 && (
                             <div className="bg-green-500 mt-3 px-3 py-3 rounded-2xl border inline-flex">
                                 <p>{discohookColorSucessMsg}</p>
+                            </div>
+                        )}
+                    </div>
+                    <div className="w-4/5 ml-20 my-10">
+                        <div className="">
+                            <div className="flex items-center space-x-3">
+                                <input id="allowquestion" type="checkbox" className="scale-175 w-4 h-4 bg-gray-100 border-gray-300 rounded-sm"></input>
+                                <p>Allow Questions</p>
+                            </div>
+                            <br></br>
+                            <button className="inline-flex bg-[#3d444d] mx-3 px-15 py-1 rounded-xl outline hover:bg-[#2c3036] hover:cursor-pointer"
+                            onClick={() => handleAllowQuestionsSubmit()}>Submit Question Availability</button>
+                        </div>
+                        {allowQuestionErrorMsg.length > 0 && (
+                            <div className="bg-red-500 mt-3 px-3 py-3 rounded-2xl border inline-flex">
+                                <p>Error: {allowQuestionErrorMsg}</p>
+                            </div>
+                        )}
+                        {allowQuestionSucessMsg.length > 0 && (
+                            <div className="bg-green-500 mt-3 px-3 py-3 rounded-2xl border inline-flex">
+                                <p>{allowQuestionSucessMsg}</p>
                             </div>
                         )}
                     </div>
