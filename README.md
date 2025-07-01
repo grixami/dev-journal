@@ -21,8 +21,8 @@ this has been made for [hackclub neighborhood](https://neighborhood.hackclub.com
 - [x]  discord webhook integration
 - [x]  searching
 - [x]  mobile support
-- [ ]  sending questions to posters
+- [x]  sending questions
 - [ ]  expore recent posts
 - [ ]  upvotes
-- [ ]  messaging
+
 
