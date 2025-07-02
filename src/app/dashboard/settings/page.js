@@ -165,10 +165,10 @@ export default function Settings() {
             <LoginNav/>
             <div className="flex justify-center items-center my-10">
                 <div className="flex flex-col justify-center items-center sm:w-11/12 md:w-3/4 lg:w-2/5 border py-10 rounded-2xl">
-                    <h1 className="text-center text-3xl border-2 p-2 rounded-3xl">Settings</h1>
+                    <h1 className="text-center text-3xl border p-3 rounded-3xl">Settings</h1>
                     <div>
-                        <div>
-                            <p className="mt-5">New Password</p>
+                        <div className="flex flex-col space-y-2 items-center justify-center p-4 border-2 rounded-xl mt-5">
+                            <p>New Password</p>
                             <div className="flex sm:flex-row flex-col">
                                 <input ref={passRef} type="password" className="border rounded-xl focus:border-[#5a9ef9] focus:outline-none px-0 sm:px-3 py-1 mt-2"></input>
                                 <button id="submit" className="bg-[#3d444d] mx-3 px-15 py-1 rounded-xl outline hover:bg-[#2c3036] hover:cursor-pointer"
@@ -189,9 +189,9 @@ export default function Settings() {
                         )}
                     </div>
 
-                    <div className="w-4/5 ml-20">
-                        <div>
-                            <p className="mt-5 text-c">Discord webhook - sends messages on post edits and uploading posts</p>
+                    <div className="w-4/5 mt-5 items-center justify-center flex">
+                        <div className="flex flex-col space-y-2 items-center justify-center p-4 border-2 rounded-xl my-2">
+                            <p className="mt-5 text-left">Discord webhook - sends messages on post edits and uploading posts</p>
                             <textarea id="discohook" className="w-4/5 border-2 resize-none rounded-2xl focus:outline-none p-2 focus:border-[#5a9ef9]"
                             placeholder="https://discord.com/api/webhooks/xxxxxxxxx/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"></textarea>
                             <button className="bg-[#3d444d] mx-3 px-15 py-1 rounded-xl outline hover:bg-[#2c3036] hover:cursor-pointer"
@@ -209,10 +209,10 @@ export default function Settings() {
                             </div>
                         )}
                     </div>
-                    <div className="w-4/5 ml-20 my-10">
-                        <div className="">
-                            <p>Discord Embed Color</p>
-                            <input id="webhookcolor" type="color"></input>
+                    <div className="w-4/5 mt-10">
+                        <div className="flex flex-col space-y-2 items-center justify-center p-4 border-2 rounded-xl my-2">
+                            <p>Discord Webhook Embed Color</p>
+                            <input className="my-2 scale-200 transition-transform duration-300 hover:scale-230 hover:cursor-pointer" id="webhookcolor" type="color"></input>
                             <br></br>
                             <button className="inline-flex bg-[#3d444d] mx-3 px-15 py-1 rounded-xl outline hover:bg-[#2c3036] hover:cursor-pointer"
                             onClick={() => handleDiscordWebhookColorSubmit()}>Submit webhook color</button>
@@ -228,10 +228,10 @@ export default function Settings() {
                             </div>
                         )}
                     </div>
-                    <div className="w-4/5 ml-20 my-10">
-                        <div className="">
+                    <div className="w-4/5 my-10">
+                        <div className="flex flex-col space-y-2 items-center justify-center p-4 border-2 rounded-xl my-2">
                             <div className="flex items-center space-x-3">
-                                <input id="allowquestion" type="checkbox" className="scale-175 w-4 h-4 bg-gray-100 border-gray-300 rounded-sm"></input>
+                                <input id="allowquestion" type="checkbox" className="scale-175 w-4 h-4 bg-gray-100 border-gray-300 rounded-sm "></input>
                                 <p>Allow Questions</p>
                             </div>
                             <br></br>
@@ -248,6 +248,9 @@ export default function Settings() {
                                 <p>{allowQuestionSucessMsg}</p>
                             </div>
                         )}
+                    </div>
+                    <div className="mt-5 transition-transform duration-300 hover:scale-105">
+                        <a className="bg-red-600 p-2 text-2xl rounded-2xl border-2 hover:bg-red-800 " href="/auth/logout">Logout</a>
                     </div>
                 </div>
             </div>
