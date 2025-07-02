@@ -163,12 +163,12 @@ export default function CreatePost() {
                                 <div className="w-full">
                                     <div className="flex flex-col items-center justify-center w-full">
                                         <label htmlFor="title" className="text-center text-2xl">Post Title</label>
-                                        <input type="text" name="title" defaultValue={postTitle} className="border-2 w-[80%] rounded-3xl px-4 py-2 border-white focus:border-[#5a9ef9] focus:outline-none mt-2"
+                                        <input type="text" name="title" defaultValue={postTitle} maxLength={50} className="border-2 w-[80%] rounded-3xl px-4 py-2 border-white focus:border-[#5a9ef9] focus:outline-none mt-2"
                                         onChange={(e) => setPostTitle(e.target.value)}></input>
                                     </div>
                                     <div className="flex flex-col items-center justify-center mt-4 w-full">
                                         <label htmlFor="description" className="text-2xl">Post Description</label>
-                                        <textarea id="description" name="description" rows="7" defaultValue={postDesc} className="mt-4 w-[80%] p-2 rounded-3xl resize-none focus:outline-none border-2 border-white focus:border-[#5a9ef9]"
+                                        <textarea id="description" name="description" maxLength={256} rows="7" defaultValue={postDesc} className="mt-4 w-[80%] p-2 rounded-3xl resize-none focus:outline-none border-2 border-white focus:border-[#5a9ef9]"
                                         onChange={(e) => setPostDesc(e.target.value)}></textarea>
                                     </div>
                                     <div className="flex flex-col items-center justify-center mt-4 w-full">

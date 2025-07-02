@@ -67,7 +67,7 @@ export default function Login() {
     <div className="min-h-screen flex flex-col">
         <NotLoginNav />
       <div className="flex items-center justify-center">
-        <div className="border border-[#3d444d] w-full max-w-xl rounded-2xl bg-[#1d2222] p-6 flex flex-col items-center shadow-[0_0_20|px_#3d444d] my-60">
+        <div className="border border-[#3d444d] w-full max-w-xl rounded-2xl bg-[#1d2222] p-6 flex flex-col items-center shadow-[0_0_20px_#3d444d] my-60">
             <h1 className="text-3xl py-3">Login Form</h1>
             <div className="h-[2px] bg-[#3d444d] w-full"></div>    
             <div className="py-2">

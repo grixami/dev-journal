@@ -28,6 +28,12 @@ export async function POST(request) {
                 status: 400
             })  
         }
+        
+        if(title.length > 50) {
+            return new Response(JSON.stringify({message: "Title is too long, please make it under 50 characters"}), {
+                status: 400
+            })
+        }
 
         if(!(tags.includes(tag))) {
             return new Response(JSON.stringify({message: "invalid tag"}), {

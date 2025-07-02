@@ -119,8 +119,9 @@ export default function Questions() {
             <div className="flex flex-col space-y-5 w-full items-center justify-center"> {/* Wireframe */}
                 {page == "received" ? (
                 receivedQuestionData.map((question) => (
+                    question.response == null && (
                     <QuestionCard key={question.id} deleteQuestion={deleteQuestion} toggleQuestionBox={toggleQuestionBox} canRespond={true} question={question}/>    
-                ))
+                )))
                 ) : (
                 sentQuestionData.map((question) => (
                     question.response != null && (

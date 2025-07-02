@@ -125,3 +125,14 @@ export async function incrementPostViews(postId) {
     return updatePost
     
 }
+
+export async function getRecentPosts(start, count) {
+    const posts = await prisma.post.findMany({
+        skip: start,
+        take: count,
+        orderBy: {
+            createdAt: "desc"
+        }
+    })
+    return posts
+}
