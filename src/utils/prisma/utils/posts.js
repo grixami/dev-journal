@@ -145,3 +145,21 @@ export async function getRecentPosts(start, count) {
     })
     return posts
 }
+
+export async function getViewLb() {
+    const posts = await prisma.post.findMany({
+        take: 10,
+        orderBy: {
+            views: "desc"
+        },
+        include: {
+            author: {
+                select: {
+                    username: true
+                } 
+            }
+        }
+    })
+
+    return posts
+}

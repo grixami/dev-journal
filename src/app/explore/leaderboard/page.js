@@ -8,6 +8,7 @@ import FollowerLbUser from "@/components/lb/followerlbuser"
 import TransparrentLoadingGif from "@/components/gif/transparrentloadinggif"
 import FollowingLbUser from "@/components/lb/followinglbuser"
 import UserPostCount from "@/components/lb/userpostcount"
+import LbPostView from "@/components/lb/lbpostview"
 
 
 export default function Leaderboard() {
@@ -17,6 +18,7 @@ export default function Leaderboard() {
     const [lbFollowerUsers, setLbFollowerUsers] = useState([])
     const [lbFollowingUsers, setLbFollowingUsers] = useState([])
     const [lbPostUsers, setLbPostUsers] = useState([])
+    const [lbPostView, setLbPostView] = useState([])
 
     useEffect(() => {
 
@@ -62,7 +64,7 @@ export default function Leaderboard() {
 
     const getPostsLb = async () => {
         setLoadingPage(true)
-        setPage("Posts")
+        setPage("Post Count")
 
         if(lbPostUsers.length != 0) {
             setLoadingPage(false)
@@ -75,6 +77,24 @@ export default function Leaderboard() {
 
         const json = await resp.json()
         setLbPostUsers(json)
+        setLoadingPage(false)
+    }
+
+    const getMostViewedPostsLb = async () => {
+        setLoadingPage(true)
+        setPage("Post View")
+
+        if(lbPostView.length != 0) {
+            setLoadingPage(false)
+            return
+        }
+
+        const resp = await fetch("/api/leaderboard/postview", {
+            method: "GET"
+        })
+
+        const json = await resp.json()
+        setLbPostView(json)
         setLoadingPage(false)
     }
 
@@ -92,13 +112,19 @@ export default function Leaderboard() {
                     <div className="flex justify-center items-center">
                         <h1 className="sm:text-7xl text-5xl sm:p-5 p-2 border-3 rounded-3xl">{page} Leaderboard</h1>
                     </div>
-                    <div className="flex space-x-3 items-center justify-center">
-                        <button className="p-2 border-2 rounded-2xl transition-transform duration-300 hover:scale-105 text-lg hover:bg-[#35383d] hover:cursor-pointer"
-                        onClick={() => getFollowersLb()}>Followers Leaderboard</button>
-                        <button className="p-2 border-2 rounded-2xl transition-transform duration-300 hover:scale-105 text-lg hover:bg-[#35383d] hover:cursor-pointer"
-                        onClick={() => getFollowingLb()}>Following Leaderboard</button>
-                        <button className="p-2 border-2 rounded-2xl transition-transform duration-300 hover:scale-105 text-lg hover:bg-[#35383d] hover:cursor-pointer"
-                        onClick={() => getPostsLb()}>Posts Leaderboard</button>
+                    <div className="flex items-center justify-center">
+                        <div className="grid sm:grid-cols-3 grid-cols-2 gap-y-2 gap-x-3 items-center justify-center">
+                            <button className="p-2 border-2 rounded-2xl transition-transform duration-300 hover:scale-105 text-lg hover:bg-[#35383d] hover:cursor-pointer"
+                            onClick={() => getFollowersLb()}>Users: Followers Leaderboard</button>
+                            <button className="p-2 border-2 rounded-2xl transition-transform duration-300 hover:scale-105 text-lg hover:bg-[#35383d] hover:cursor-pointer"
+                            onClick={() => getFollowingLb()}>Users: Following Leaderboard</button>
+                            <button className="p-2 border-2 rounded-2xl transition-transform duration-300 hover:scale-105 text-lg hover:bg-[#35383d] hover:cursor-pointer"
+                            onClick={() => getPostsLb()}>Users: Post Count Leaderboard</button>
+
+                            <button className="p-2 border-2 rounded-2xl transition-transform duration-300 hover:scale-105 text-lg hover:bg-[#35383d] hover:cursor-pointer"
+                            onClick={() => getMostViewedPostsLb()}>Posts: Post view Leaderboard</button>
+                        
+                        </div>
                     </div>
                     {page == "Followers" ? (
                     <div className="flex flex-col justify-center items-center my-5 space-y-3">
@@ -112,14 +138,20 @@ export default function Leaderboard() {
                             <FollowingLbUser key={user.id} user={user}/>
                         ))}
                     </div>
-                    ) : page == "Posts" ? (
+                    ) : page == "Post Count" ? (
                     <div className="flex flex-col justify-center items-center my-5 space-y-3">
                         {lbPostUsers.length > 0 && lbPostUsers.map((user) => (
                             <UserPostCount key={user.id} user={user}/>
                         ))}
                     </div>
+                    ) : page == "Post View" ? (
+                    <div className="flex flex-col justify-center items-center my-5 space-y-3">
+                        {lbPostView.length > 0 && lbPostView.map((post) => (
+                            <LbPostView key={post.id} post={post}/>
+                        ))}
+                    </div>
                     ) : (
-                        <p>Todo</p>
+                        <p>ToDo</p>
                     )}
 
                 </div>
