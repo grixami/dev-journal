@@ -24,7 +24,21 @@ export default function Drafts() {
         
     }, [])
     
+    const deleteDraft = async (postId) => {
+        setDraftData(prevData => ({...prevData, posts: prevData.posts.filter(post => post.id != postId)}))
+        const resp = await fetch("/api/post/delete", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                token: getCookie("auth_token"),
+                id: postId
+            })
+        })
 
+
+    }
 
     return (
         <>
@@ -46,7 +60,7 @@ export default function Drafts() {
                     
                     {!loading && draftData && draftData.posts.length > 0 && draftData.posts.map((draft) => (
                         <div key={draft.id}>
-                            <PostDraft postDesc={draft.desc} postId={draft.id} postTitle={draft.title}/>
+                            <PostDraft postDesc={draft.desc} postId={draft.id} postTitle={draft.title} deleteDraft={deleteDraft}/>
                         </div>
                     ))}
                 </div>

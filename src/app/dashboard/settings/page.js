@@ -24,7 +24,7 @@ export default function Settings() {
     const [allowQuestionSucessMsg, setAllowQuestionSucessMsg] = useState("")
 
 
-    let handlePasswordSubmit = async (e) => {
+    const handlePasswordSubmit = async (e) => {
         setPasswordErrorMsg("")
         setPasswordSucessMsg("")
         const resp = await fetch("/api/user/updatepassword", {
@@ -53,7 +53,7 @@ export default function Settings() {
 
     }
 
-    let handleDiscohookSubmit = async () => {
+    const handleDiscohookSubmit = async () => {
         setDiscohookErrorMsg("")
         setDiscohookSucessMsg("")
         const discohookElement = document.getElementById("discohook")
@@ -93,7 +93,7 @@ export default function Settings() {
     }
 
 
-    let handleDiscordWebhookColorSubmit = async () => {
+    const handleDiscordWebhookColorSubmit = async () => {
         setDiscohookColorSucessMsg("")
         setDiscohookColorErrorMsg("")
         const colorElement = document.getElementById("webhookcolor")
@@ -122,11 +122,11 @@ export default function Settings() {
         setDiscohookColorSucessMsg("sucess")
     }
 
-    let hextToDiscord = (color) => { // discord colors are an int, not hex code
+    const hextToDiscord = (color) => { // discord colors are an int, not hex code
         return parseInt(color.replace("#" , ""), 16)
     }
 
-    let handleAllowQuestionsSubmit = async () => {
+    const handleAllowQuestionsSubmit = async () => {
         setAllowQuestionErrorMsg("")
         setAllowQuestionSucessMsg("")
 
@@ -165,12 +165,12 @@ export default function Settings() {
             <LoginNav/>
             <div className="flex justify-center items-center my-10">
                 <div className="flex flex-col justify-center items-center sm:w-11/12 md:w-3/4 lg:w-2/5 border py-10 rounded-2xl">
-                    <h1 className="text-center text-3xl border p-3 rounded-3xl">Settings</h1>
+                    <h1 className="text-center text-3xl border-2 p-3 rounded-3xl">Settings</h1>
                     <div>
                         <div className="flex flex-col space-y-2 items-center justify-center p-4 border-2 rounded-xl mt-5">
                             <p>New Password</p>
                             <div className="flex sm:flex-row flex-col">
-                                <input ref={passRef} type="password" className="border rounded-xl focus:border-[#5a9ef9] focus:outline-none px-0 sm:px-3 py-1 mt-2"></input>
+                                <input ref={passRef} type="password" placeholder="xxxxxxxx" className="border rounded-xl focus:border-[#5a9ef9] focus:outline-none px-0 sm:px-3 py-1 mt-2"></input>
                                 <button id="submit" className="bg-[#3d444d] mx-3 px-15 py-1 rounded-xl outline hover:bg-[#2c3036] hover:cursor-pointer"
                                 onClick={() => handlePasswordSubmit}
                                 >Update</button>

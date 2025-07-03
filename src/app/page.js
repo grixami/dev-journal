@@ -93,7 +93,7 @@ export default function Home() {
               width={60}
               height={60}
               onClick={() => {
-                window.open("https://github.com/grixami/dev-journal", "_blank")
+                window.open("https://github.com/grixami/dev-journal", "_blank") // _blank is a new tab
               }}
             />
           </div>
@@ -117,8 +117,66 @@ export default function Home() {
             <p className="text-center">Blogging will help you reflect on your projects, writing about them is a great way to review what you have done, usually when people review projects, they find mistakes that they can later correct</p>
           </div>
         </div>
+        <div className="flex items-center justify-center mt-10 mb-30 ">
+            <div>
+              <div>
+                <h2 className="text-center text-4xl"><b className="border-2 p-2 rounded-3xl">Features</b></h2>
+              </div>
+              <div className="grid xl:grid-cols-2 grid-cols-1 gap-x-10">
+                <div className="flex flex-col">
+                  <h3 className="text-center text-2xl mt-5">Posting</h3>
+                  <div className="border-2 rounded-4xl transition-transform duration-300 hover:scale-102 mt-2 ">
+                    <Image
+                    className="rounded-4xl"
+                    src="/assets/img/homepage/editpost.png"
+                    alt="edit page"
+                    width={750}
+                    height={750}
+                    />
+                  </div>
+              </div>
+              <div className="flex flex-col">
+                  <h3 className="text-center text-2xl mt-5">dashboard</h3>
+                  <div className="border-2 rounded-4xl transition-transform duration-300 hover:scale-102 mt-2">
+                    <Image
+                    className="rounded-4xl"
+                    src="/assets/img/homepage/dashboard.png"
+                    alt="edit page"
+                    width={750}
+                    height={750}
+                    />
+                  </div>
+              </div>
+              <div className="flex flex-col">
+                  <h3 className="text-center text-2xl mt-5">Settings</h3>
+                  <div className="border-2 rounded-4xl transition-transform duration-300 hover:scale-102 mt-2">
+                    <Image
+                    className="rounded-4xl"
+                    src="/assets/img/homepage/settings.png"
+                    alt="edit page"
+                    width={750}
+                    height={750}
+                    />
+                  </div>
+              </div>
+              <div className="flex flex-col">
+                  <h3 className="text-center text-2xl mt-5">Leaderboards</h3>
+                  <div className="border-2 rounded-4xl transition-transform duration-300 hover:scale-102 mt-2">
+                    <Image
+                    className="rounded-4xl"
+                    src="/assets/img/homepage/lb.png"
+                    alt="edit page"
+                    width={750}
+                    height={750}
+                    />
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <MainFooter/>
+
     </>
   );
 }

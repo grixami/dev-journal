@@ -32,7 +32,7 @@ export default function UserFollowers({ params }) {
         <div>
             <LoginNav/>
             <div className="flex items-center justify-center">
-                <h1 className="text-7xl mt-5 border-4 rounded-4xl p-2">Followers</h1>
+                <h1 className="text-7xl mt-5 border-4 rounded-4xl p-3">Followers</h1>
             </div>
             <div className="flex justify-center items-center mt-10">
                 {followerData && followerData.map((follower) => (

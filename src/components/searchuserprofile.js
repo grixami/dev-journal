@@ -6,7 +6,7 @@ export default function SearchUserProfile({userId, username, bio, pfp}) {
 
     return(
         <a href={`/user/${userId}/profile`}>
-            <div id={userId} className="border rounded-2xl p-4 transition-transform duration-600 ease-in-out hover:translate-x-[7.5%] hover:bg-[#2c3036]">
+            <div id={userId} className="border rounded-2xl p-4 transition-transform duration-600 ease-in-out hover:translate-x-[2.5%] hover:bg-[#2c3036]">
                 <div className="flex flex-row">
                     <div className="flex justify-center items-center">
                         {pfp != null ? (

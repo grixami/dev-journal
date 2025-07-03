@@ -35,7 +35,7 @@ export default function Bookmarks() {
                 <LoginNav/>
                 <div>
                     <div className="flex justify-center items-center mt-15">
-                        <h1 className="text-center text-4xl sm:text-7xl p-2 border-4 rounded-4xl">Bookmarks</h1>
+                        <h1 className="text-center text-4xl sm:text-7xl p-4 border-3 rounded-4xl">Bookmarks</h1>
                     </div>
                 </div>
                 <div className="flex flex-col items-center justify-center py-10 space-y-5">

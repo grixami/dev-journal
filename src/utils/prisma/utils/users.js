@@ -14,6 +14,9 @@ export async function getUserNoPass(id) {
             permissionlevel: true,
             email: false,
             allowquestions: true,
+            email: false,
+            discohook: false,
+            discohookcolor: false,
             _count: {
                 select: {
                     followers: true,
@@ -200,4 +203,77 @@ export async function updateQuestionStatus(userId, status) {
 
     return updatedUser
     
+}
+
+export async function getFolowerLeaderboard() {
+    const users = await prisma.user.findMany({
+        orderBy: {
+            followers: {
+                _count: "desc"
+            }
+        },
+        take: 10,
+        include: {
+            _count: {
+                select: {
+                    followers: true
+                }
+            },
+            password: false,
+            email: false,
+            discohook: false,
+            discohookcolor: false
+        },
+    })
+    
+    return users
+}
+
+export async function getFollowingLeaderboard() {
+    const users = await prisma.user.findMany({
+        orderBy: {
+            following: {
+                _count: "desc"
+            }
+        },
+        take: 10,
+        include: {
+            _count: {
+                select: {
+                    following: true
+                }
+            },
+            password: false,
+            email: false,
+            discohook: false,
+            discohookcolor: false
+        }
+    })
+
+    return users
+    
+}
+
+export async function getPostCountLeaderboard() {
+    const users = await prisma.user.findMany({
+        orderBy: {
+            posts: {
+                _count: "desc"
+            }
+        },
+        take: 10,
+        include: {
+            _count: {
+                select: {
+                    posts: true
+                }
+            },
+            password: false,
+            email: false,
+            discohook: false,
+            discohookcolor: false
+        },
+    })
+
+    return users
 }

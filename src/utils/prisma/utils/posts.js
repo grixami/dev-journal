@@ -45,6 +45,9 @@ export async function getUserPosts(userId, includeDrafts) {
             authorId: userId,
             draft: includeDrafts,
             isPublic: 1
+        },
+        orderBy: {
+            createdAt: "desc"
         }
     })
 
@@ -59,7 +62,10 @@ export async function getPostsWithTitle(title) {
             },
             isPublic: 1
         },
-        take: 20
+        take: 20,
+        orderBy: {
+            createdAt: "desc"
+        }
     })
 
     return posts
@@ -70,6 +76,9 @@ export async function getPostDrafts(userId) {
         where: {
             authorId: userId,
             isPublic: 0
+        },
+        orderBy: {
+            createdAt: "desc"
         }
     })
 

@@ -60,36 +60,38 @@ export default function Explore() {
         <div>
             <LoginNav/>
             <div>
-                <div className="mt-10 flex items-center justify-center">
+                <div className="m-5 flex items-end justify-end">
+                    <div className="transition-transform duration-300 hover:scale-105">
+                        <a href="/explore/leaderboard" className="text-lg p-2 border-2 rounded-2xl hover:bg-[#35383d]">Leaderboard</a>
+                    </div>
+                </div>
+                <div className="mt-10 flex items-center justify-center"> {/* Will add more buttons when upvotes are added to filter by the top posts */}
                     <button className="p-2 border-2 rounded-2xl text-2xl hover:scale-105 transition-transform duration-300 hover:cursor-pointer hover:bg-[#35383d]">Recent</button>
                 </div>
             </div>
             {!loading ? (
             <div>
-<div className="flex items-center justify-center">
-                <div className="w-3/5">
-                    {recentPosts.length > 0 && recentPosts.map((post) => (
-                        <SearchPost key={post.id} post={post}/>
-                    ))}
+                <div className="flex items-center justify-center">
+                    <div className="w-3/5">
+                        {recentPosts.length > 0 && recentPosts.map((post) => (
+                            <SearchPost key={post.id} post={post}/>
+                        ))}
+                    </div>
+
                 </div>
-
-            </div>
-            <div className="flex flex-col items-center justify-center">
-                {!noMore ? (
-                !moreLoading ? (
-                    <button className="border-2 p-2 rounded-2xl hover:scale-105 transition-transform duration-300 hover:cursor-pointer hover:bg-[#35383d]" onClick={() => getNewPosts()}>getnew</button>
-                ) : (
-                    <TransparrentLoadingGif width={50} height={50}/>
-                )
-                ) : (
-                <div className="bg-red-600 p-2 border-2 rounded-2xl">
-                    <p>No more posts</p>
+                <div className="flex flex-col items-center justify-center">
+                    {!noMore ? (
+                    !moreLoading ? (
+                        <button className="text-xl border-2 p-2 rounded-2xl hover:scale-105 transition-transform duration-300 hover:cursor-pointer hover:bg-[#35383d]" onClick={() => getNewPosts()}>Get More</button>
+                    ) : (
+                        <TransparrentLoadingGif width={50} height={50}/>
+                    )
+                    ) : (
+                    <div className="bg-red-600 p-2 border-2 rounded-2xl">
+                        <p>No more posts</p>
+                    </div>
+                    )}
                 </div>
-                )}
-
-                
-
-            </div>
             </div>
             ) : (
                 <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2">

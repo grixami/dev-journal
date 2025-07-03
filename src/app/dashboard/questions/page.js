@@ -105,9 +105,8 @@ export default function Questions() {
         <LoginNav/>
         {!pageLoading ? (
         <div className="flex flex-col items-center justify-center">
- 
             <div>
-                <h1 className="my-10 md:text-7xl text-5xl p-2 border-2 rounded-2xl ">Questions</h1>
+                <h1 className="my-10 md:text-7xl text-5xl p-4 border-3 rounded-2xl ">Questions</h1>
             </div>
             <div className="flex items-center justify-center space-x-2 sm:space-x-5 mb-4 flex-col sm:flex-row">
                 <button className="p-1 sm:p-2 text-lg sm:text-2xl border-2 rounded-2xl mb-2 hover:bg-[#3d444d] transition-transform duration-300 hover:scale-105 hover:cursor-pointer"
@@ -129,7 +128,6 @@ export default function Questions() {
                     )
                 ))
                 )}
-
 
             </div>
             {questionBox && (
@@ -173,8 +171,6 @@ export default function Questions() {
             <TransparrentLoadingGif width={250} height={250}/>
             </div>
         )}
-        
-        
         </>
     )
 }
